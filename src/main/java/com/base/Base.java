@@ -69,6 +69,7 @@ public final class Base {
         return gson.fromJson(jData, model);
     }
 
+
     public Response sendRequest(String endpoint, String method)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, new HashMap<>());

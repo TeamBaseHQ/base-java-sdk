@@ -9,7 +9,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-import javax.print.attribute.standard.Media;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +28,7 @@ public class OkHttpClient implements HttpClientInterface {
             // Prepare the headers
             this.prepareHeaders(request, requestBuilder);
 
-            if (!request.getParameters().isEmpty() || !request.getFiles().isEmpty() ) {
+            if (!request.getParameters().isEmpty() || !request.getFiles().isEmpty()) {
                 // Build Request Body
                 MultipartBody.Builder bodyBuilder = this.getMultiPartBuilder();
                 this.addParamsToBuilder(bodyBuilder, request.getParameters());
@@ -59,7 +58,7 @@ public class OkHttpClient implements HttpClientInterface {
 
             return response;
         } catch (Exception e) {
-            throw new BaseHttpException(500, e.getMessage());
+            throw new BaseHttpException(500, e.getMessage(), response);
         }
     }
 

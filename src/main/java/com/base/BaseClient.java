@@ -5,7 +5,6 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Clients.HttpClientInterface;
 import com.base.Http.Clients.OkHttpClient;
 import com.base.Http.Request.Request;
-import com.base.Http.Request.RequestBody;
 import com.base.Http.Response.Handlers.BaseResponseHandler;
 import com.base.Http.Response.Handlers.HandlerInterface;
 import com.base.Http.Response.Response;
@@ -131,7 +130,7 @@ public final class BaseClient {
         request.setUrl(this.buildUrl(request.getEndpoint()));
         request.setHeaders(this.buildHeaders(request));
 
-        return this.getHttpClient().send(request, response);
+        return this.getResponseHandler().handle(this.getHttpClient().send(request, response));
     }
 
     private String buildUrl(String endpoint) {
@@ -164,7 +163,7 @@ public final class BaseClient {
             accessToken = request.getAccessToken();
         }
 
-        if (accessToken !=  null) {
+        if (accessToken != null) {
             headers.put("Authorization", "Bearer ".concat(accessToken.getAccessToken()));
         }
 

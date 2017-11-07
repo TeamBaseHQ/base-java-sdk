@@ -22,15 +22,38 @@ package com.base;
 
 import com.base.Auth.AccessToken;
 import com.base.Exceptions.BaseException;
+import com.base.Exceptions.BaseHttpException;
+import com.base.Exceptions.Http.InputError;
 import com.base.Models.Media;
 import com.base.Models.User;
 
 import java.io.File;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) {
-        getUserAccessToken();
+        createUser();
+//        getUserAccessToken();
+    }
+
+    public static void createUser() {
+        Base base = getBase();
+        try {
+            User user = base.userService().createUser("John Doe", "abcd@gmail.com", "abcd1234");
+            System.out.println(user.getName());
+        } catch (InputError e) {
+            // Input Error
+            // Fetch all the errors from the Error Bag
+            Map<String, String[]> errors = e.getErrorBag().getErrors();
+            for (String key : errors.keySet()) {
+                for (String error : errors.get(key)) {
+                    System.out.println(error);
+                }
+            }
+        } catch (BaseHttpException e) {
+            System.out.println(String.valueOf(e.getResponse().getStatusCode()));
+        }
     }
 
     public static void getUserAccessToken() {
@@ -38,7 +61,7 @@ public class Main {
 
         try {
             // Log in User
-            AccessToken accessToken = base.getUserAccessToken("abcd@xyz.com", "abcd1234");
+            AccessToken accessToken = base.getUserAccessToken("abcd@gmail.com", "abcd1234");
 
             // Set the Access Token for the current User
             // So that this can be used for all the subsequent requests.
@@ -47,10 +70,10 @@ public class Main {
             User user = base.userService().getCurrentUser();
             System.out.println(user.getName());
 
-            File file = new File("C:\\profile-picture.jpg");
+            File file = new File("C:\\propic.jpg");
             Media media = base.userService().uploadProfilePicture(file);
 
-            System.out.printf(media.getUrl("small"));
+            System.out.println(media.getUrl("small"));
 
         } catch (BaseException e) {
             e.printStackTrace();
@@ -59,9 +82,9 @@ public class Main {
 
     private static Base getBase() {
         BaseClient baseClient = new BaseClient();
-//      baseClient.setApiUrl("http://backend.baseapp.io/api");
+        baseClient.setApiUrl("http://backend.baseapp.io/api");
 
-        baseClient.setClientId("1").setClientSecret("abcd1234");
+        baseClient.setClientId("9").setClientSecret("tJDLmxkA2ogjEcU3qRtUwVSitkD9VJltOKnYh5AJ");
 
         return new Base(baseClient);
     }
