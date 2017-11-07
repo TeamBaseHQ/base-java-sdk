@@ -6,3 +6,4 @@ build/
 *.aar
 *.war
 src/main/java/com/base/Main.java
+out/
