@@ -3,41 +3,61 @@ package com.base.Http.Clients;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
+import com.sun.istack.internal.Nullable;
 import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
+import javax.print.attribute.standard.Media;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public class OkHttpClient implements HttpClientInterface {
 
-    /**
-     * Send Request.
-     *
-     * @param request
-     * @return Response
-     * @throws BaseHttpException
-     */
-    public Response send(Request request) throws BaseHttpException {
-        okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder()
-                .url(request.getUrl());
-
-        // Prepare Headers
-        this.prepareHeaders(request, requestBuilder);
-
-        // Build the Request
-        okhttp3.Request okHttpRequest = requestBuilder.build();
-
-        // Create the Client
-        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+    @Override
+    public Response send(Request request, @Nullable Response response) throws BaseHttpException {
 
         // Send the Request and Fetch the Response
         try {
+            okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder()
+                    .url(request.getUrl());
+            // Prepare the headers
+            this.prepareHeaders(request, requestBuilder);
+
+            if (!request.getParameters().isEmpty() || !request.getFiles().isEmpty() ) {
+                // Build Request Body
+                MultipartBody.Builder bodyBuilder = this.getMultiPartBuilder();
+                this.addParamsToBuilder(bodyBuilder, request.getParameters());
+                this.addFilesToBuilder(bodyBuilder, request.getFiles());
+                // Add body to the request
+                requestBuilder.method(request.getMethod(), bodyBuilder.build());
+            }
+
+            // Build the Request
+            okhttp3.Request okHttpRequest = requestBuilder.build();
+
+
+            // Create the Client
+            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
             okhttp3.Response okHttpResponse = client.newCall(okHttpRequest).execute();
 
             String body = okHttpResponse.body().string();
             Map<String, String> responseHeaders = this.getResponseHeaders(okHttpResponse);
-            return new Response(request, responseHeaders, okHttpResponse.code(), body);
+
+            if (response == null) {
+                response = new Response(request);
+            }
+
+            response.setBody(body)
+                    .setHeaders(responseHeaders)
+                    .setStatusCode(okHttpResponse.code());
+
+            return response;
         } catch (Exception e) {
             throw new BaseHttpException(500, e.getMessage());
         }
@@ -45,6 +65,7 @@ public class OkHttpClient implements HttpClientInterface {
 
     /**
      * Get Response Headers.
+     *
      * @param okHttpResponse
      * @return
      */
@@ -65,6 +86,7 @@ public class OkHttpClient implements HttpClientInterface {
 
     /**
      * Prepare Request Headers.
+     *
      * @param request
      * @param requestBuilder
      */
@@ -76,4 +98,40 @@ public class OkHttpClient implements HttpClientInterface {
             requestBuilder.addHeader(headerKey, headerValue);
         }
     }
+
+    private MultipartBody.Builder getMultiPartBuilder() throws Exception {
+        return new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+    }
+
+
+    private void addParamsToBuilder(MultipartBody.Builder builder, Map<String, String> parameters) {
+        for (String key : parameters.keySet()) {
+            String value = parameters.get(key);
+            // If key is `user_ids*1`, its part of a value (user_ids[]) array. Else, it's a single value.
+            String keyName = key.contains("*") ? key.substring(0, key.indexOf('*')).concat("[]") : key;
+
+            builder.addFormDataPart(keyName, value);
+        }
+    }
+
+    private void addFilesToBuilder(MultipartBody.Builder builder, Map<String, File> files) throws Exception {
+        for (String key : files.keySet()) {
+            File file = files.get(key);
+
+            // If key is `allFiles*1`, its part of a file (allFiles[]) array. Else, it's a single file.
+            String fileName = key.contains("*") ? key.substring(0, key.indexOf('*')).concat("[]") : key;
+
+            if (file.exists()) {
+                MediaType fileType = null;
+                try {
+                    fileType = MediaType.parse(Files.probeContentType(file.toPath()));
+                } catch (IOException e) {
+                    throw new Exception(e);
+                }
+                builder.addFormDataPart(fileName, file.getName(), RequestBody.create(fileType, file));
+            }
+        }
+    }
+
 }

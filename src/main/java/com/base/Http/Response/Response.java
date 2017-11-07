@@ -27,8 +27,12 @@ public class Response {
     protected String body;
 
 
-    public Response(Request request, Map<String, String> headers, int statusCode, String body) {
+    public Response(Request request) {
         this.request = request;
+    }
+
+    public Response(Request request, Map<String, String> headers, int statusCode, String body) {
+        this(request);
         this.headers = headers;
         this.statusCode = statusCode;
         this.body = body;
@@ -38,31 +42,35 @@ public class Response {
         return request;
     }
 
-    public void setRequest(Request request) {
+    public Response setRequest(Request request) {
         this.request = request;
+        return this;
     }
 
     public Map<String, String> getHeaders() {
         return headers;
     }
 
-    public void setHeaders(Map<String, String> headers) {
+    public Response setHeaders(Map<String, String> headers) {
         this.headers = headers;
+        return this;
     }
 
     public int getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(int statusCode) {
+    public Response setStatusCode(int statusCode) {
         this.statusCode = statusCode;
+        return this;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public Response setBody(String body) {
         this.body = body;
+        return this;
     }
 }

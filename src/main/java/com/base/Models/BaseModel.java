@@ -1,5 +1,10 @@
 package com.base.Models;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+
 public class BaseModel {
 
     /**
@@ -17,6 +22,8 @@ public class BaseModel {
      */
     protected String updated_at;
 
+    private String expectedPattern = "y-M-d H:m:s";
+
     public int getId() {
         return id;
     }
@@ -26,8 +33,8 @@ public class BaseModel {
         return this;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public Date getCreated_at() {
+        return this.makeDate(this.created_at);
     }
 
     public BaseModel setCreated_at(String created_at) {
@@ -35,12 +42,25 @@ public class BaseModel {
         return this;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public Date getUpdated_at() {
+        return this.makeDate(this.created_at);
     }
 
     public BaseModel setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
         return this;
+    }
+
+    private Date makeDate(String dateTime) {
+        SimpleDateFormat formatter = new SimpleDateFormat(this.expectedPattern);
+        try
+        {
+            Date date = formatter.parse(dateTime);
+            return date;
+        }
+        catch (ParseException e)
+        {
+            return new Date();
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Clients.HttpClientInterface;
 import com.base.Http.Clients.OkHttpClient;
 import com.base.Http.Request.Request;
+import com.base.Http.Request.RequestBody;
 import com.base.Http.Response.Handlers.BaseResponseHandler;
 import com.base.Http.Response.Handlers.HandlerInterface;
 import com.base.Http.Response.Response;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 public final class BaseClient {
 
-    private static final String DEFAULT_API_URL = "https://backend.baseapp.io/api";
+    private static final String DEFAULT_API_URL = "http://baseapp-backend.kunalvarma.in/api";
 
     private String apiUrl;
 
@@ -32,14 +33,14 @@ public final class BaseClient {
 
     public BaseClient() {
         this.httpClient = new OkHttpClient();
-        this.headers = BaseClient.getDefaultHeaders();
         this.apiUrl = BaseClient.DEFAULT_API_URL;
+        this.headers = BaseClient.getDefaultHeaders();
+        this.responseHandler = new BaseResponseHandler();
     }
 
     public BaseClient(HttpClientInterface httpClient) {
         this();
         this.httpClient = httpClient;
-        this.responseHandler = new BaseResponseHandler();
     }
 
     public BaseClient(HttpClientInterface httpClient, HandlerInterface responseHandler) {
@@ -73,7 +74,7 @@ public final class BaseClient {
     }
 
     public Map<String, String> getHeaders() {
-        return headers;
+        return this.headers;
     }
 
     public BaseClient addHeader(String key, String value) {
@@ -118,7 +119,7 @@ public final class BaseClient {
     }
 
     public AccessToken getAccessToken() {
-        return accessToken;
+        return this.accessToken;
     }
 
     public BaseClient setAccessToken(AccessToken accessToken) {
@@ -126,23 +127,15 @@ public final class BaseClient {
         return this;
     }
 
-    public Response sendRequest(String endpoint, String method) throws BaseHttpException {
-        String url = this.buildUrl(endpoint);
-        Request request = makeRequest(url, method);
+    public Response sendRequest(Request request, Response response) throws BaseHttpException {
+        request.setUrl(this.buildUrl(request.getEndpoint()));
+        request.setHeaders(this.buildHeaders(request));
 
-        Response response = this.httpClient.send(request);
-
-        return this.responseHandler.handle(response);
+        return this.getHttpClient().send(request, response);
     }
 
     private String buildUrl(String endpoint) {
         return this.getApiUrl().concat(endpoint);
-    }
-
-    private Request makeRequest(String url, String method) {
-        Request request = new Request(url, method);
-        request.setHeaders(this.headers);
-        return request;
     }
 
     private static Map<String, String> getDefaultHeaders() {
@@ -151,29 +144,36 @@ public final class BaseClient {
         return headers;
     }
 
-    private Map<String, String> buildHeaders() {
+    private Map<String, String> buildHeaders(Request request) {
         // Get All the Headers
-        Map<String, String> headers = this.getHeaders();
+        Map<String, String> allHeaders = BaseClient.getDefaultHeaders();
 
         // Add the Auth Headers
-        headers.putAll(this.getAuthHeaders());
+        allHeaders.putAll(this.getAuthHeaders(request));
+        // Add the Custom Headers
+        allHeaders.putAll(request.getHeaders());
 
-        return headers;
+        return allHeaders;
     }
 
-    private Map<String, String> getAuthHeaders() {
+    private Map<String, String> getAuthHeaders(Request request) {
         Map<String, String> headers = new HashMap<>();
+        AccessToken accessToken = this.getAccessToken();
 
-        if (this.getAccessToken().getAccessToken() != null) {
-            headers.put("Authorization", "Bearer ".concat(this.getAccessToken().getAccessToken()));
+        if (request.getAccessToken() != null) {
+            accessToken = request.getAccessToken();
+        }
+
+        if (accessToken !=  null) {
+            headers.put("Authorization", "Bearer ".concat(accessToken.getAccessToken()));
         }
 
         if (this.getClientId() != null) {
-            headers.put("CLIENT_ID", this.getClientId());
+            headers.put("X-CLIENT-ID", this.getClientId());
         }
 
         if (this.getClientSecret() != null) {
-            headers.put("CLIENT_ID", this.getClientSecret());
+            headers.put("X-CLIENT-SECRET", this.getClientSecret());
         }
 
 

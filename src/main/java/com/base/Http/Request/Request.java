@@ -1,5 +1,9 @@
 package com.base.Http.Request;
 
+import com.base.Auth.AccessToken;
+
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 public class Request {
@@ -29,6 +33,11 @@ public class Request {
     public static final String METHOD_DELETE = "DELETE";
 
     /**
+     * Request endpoint
+     */
+    protected String endpoint;
+
+    /**
      * Request url
      */
     protected String url;
@@ -54,23 +63,38 @@ public class Request {
     protected RequestBody body;
 
     /**
+     * Content type
+     */
+    protected String contentType = "application/json; charset=utf-8";
+
+    /**
+     * Files
+     */
+    protected Map<String, File> files;
+
+    /**
+     * Access Token
+     */
+    protected AccessToken accessToken;
+
+    /**
      * Create new Request.
      *
-     * @param url
+     * @param endpoint
      * @param method
      */
-    public Request(String url, String method) {
-        this.url = url;
+    public Request(String endpoint, String method) {
+        this.endpoint = endpoint;
         this.method = method;
     }
 
     /**
-     * Get Request Url.
+     * Get Request Endpoint.
      *
-     * @return Request Url.
+     * @return Request Endpoint.
      */
-    public String getUrl() {
-        return url;
+    public String getEndpoint() {
+        return endpoint;
     }
 
     /**
@@ -110,17 +134,19 @@ public class Request {
     }
 
     /**
-     * Set Url.
-     * @param url
+     * Set Endpoint.
+     *
+     * @param endpoint
      * @return
      */
-    public Request setUrl(String url) {
-        this.url = url;
+    public Request setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
         return this;
     }
 
     /**
      * Set Method.
+     *
      * @param method
      * @return
      */
@@ -131,6 +157,7 @@ public class Request {
 
     /**
      * Set Headers.
+     *
      * @param headers
      * @return
      */
@@ -141,6 +168,7 @@ public class Request {
 
     /**
      * Set Parameters.
+     *
      * @param parameters
      * @return
      */
@@ -151,11 +179,57 @@ public class Request {
 
     /**
      * Set Body.
+     *
      * @param body
      * @return
      */
     public Request setBody(RequestBody body) {
         this.body = body;
+        return this;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public Request setContentType(String contentType) {
+        this.contentType = contentType;
+        return this;
+    }
+
+    public Map<String, File> getFiles() {
+        return files;
+    }
+
+    public Request setFiles(Map<String, File> files) {
+        this.files = files;
+        return this;
+    }
+
+    public Request addFile(String key, File file) {
+        this.files.put(key, file);
+        return this;
+    }
+
+    public boolean hasFiles() {
+        return !this.files.isEmpty();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Request setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public AccessToken getAccessToken() {
+        return accessToken;
+    }
+
+    public Request setAccessToken(AccessToken accessToken) {
+        this.accessToken = accessToken;
         return this;
     }
 }

@@ -12,10 +12,11 @@ public class User extends BaseModel {
      */
     protected String email;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
+    /**
+     * Is Verified
+     */
+    protected boolean is_verified;
+
 
     public String getName() {
         return name;
@@ -32,6 +33,15 @@ public class User extends BaseModel {
 
     public User setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public boolean isVerified() {
+        return is_verified;
+    }
+
+    public User setIsVerified(boolean is_verified) {
+        this.is_verified = is_verified;
         return this;
     }
 }
