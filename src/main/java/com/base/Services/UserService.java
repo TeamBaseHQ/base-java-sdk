@@ -46,6 +46,16 @@ public class UserService {
         return this.find("me");
     }
 
+    public User createUser(String name, String email, String password) throws BaseHttpException {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("email", email);
+        parameters.put("password", password);
+        parameters.put("password_confirmation", password);
+
+        Response response = this.base.sendRequest("/users", Request.METHOD_POST, parameters);
+        return (User) Base.makeModel(User.class, response.getBody());
+    }
 
     /**
      * Upload Current User's Profile Picture.
