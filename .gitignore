@@ -7,3 +7,5 @@ build/
 *.war
 src/main/java/com/base/Main.java
 out/
+*.iml
+!gradle/wrapper/gradle-wrapper.jar
