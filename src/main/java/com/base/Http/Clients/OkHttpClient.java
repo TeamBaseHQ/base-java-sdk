@@ -3,7 +3,6 @@ package com.base.Http.Clients;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
-import com.sun.istack.internal.Nullable;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class OkHttpClient implements HttpClientInterface {
 
     @Override
-    public Response send(Request request, @Nullable Response response) throws BaseHttpException {
+    public Response send(Request request, Response response) throws BaseHttpException {
 
         // Send the Request and Fetch the Response
         try {
