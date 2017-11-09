@@ -64,7 +64,6 @@ public class ChannelService {
      *
      * @param teamSlug
      * @param channelSlug
-     *
      * @throws ChannelNotFound
      */
     public boolean deleteChannel(String teamSlug, String channelSlug) throws ChannelNotFound {
@@ -76,5 +75,41 @@ public class ChannelService {
         }
     }
 
+    /**
+     * Update Channel
+     *
+     * @param teamSlug    Channel teamSlug
+     * @param channelSlug Channel channelSlug
+     * @param name        Channel name
+     * @param description Channel description
+     * @param color       Channel color
+     * @param is_private  Channel is_private
+     * @return Updated Channel
+     * @throws BaseHttpException
+     */
+    public Channel updateChannel(String teamSlug, String channelSlug, String name, String description, String color, String is_private) throws BaseHttpException {
+        Map<String, String> parameters = new HashMap<>();
+        if (!name.isEmpty()) {
+            parameters.put("name", name);
+        }
+        if (!description.isEmpty()) {
+            parameters.put("description", description);
+        }
+        if (!color.isEmpty()) {
+            parameters.put("color", color);
+        }
+        if (!is_private.isEmpty()) {
+            parameters.put("is_private", is_private);
+        }
+
+        parameters.put("name", name);
+        parameters.put("description", description);
+        parameters.put("color", color);
+        parameters.put("is_private", is_private);
+
+        String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug);
+        Response response = this.base.sendRequest(URL, Request.METHOD_PATCH, parameters);
+        return (Channel) Base.makeModel(Channel.class, response.getBody());
+    }
 
 }
