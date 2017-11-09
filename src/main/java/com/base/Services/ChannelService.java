@@ -3,7 +3,6 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
-import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Channel;
@@ -42,6 +41,22 @@ public class ChannelService {
         return (Channel) Base.makeModel(Channel.class, response.getBody());
     }
 
-   
+    /**
+     * Get All Channels By Slug
+     *
+     * @param slug Slug of Team
+     * @return List of Channel in slug
+     * @throws ChannelNotFound
+     */
+    public List<Channel> allChannels(String slug) throws ChannelNotFound {
+        try {
+            Response response = base.sendRequest("/teams/".concat(slug).concat("/channels"), Request.METHOD_GET);
+            Channel[] channelArray = (Channel[]) Base.makeModel(Channel[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(channelArray));
+        } catch (BaseHttpException e) {
+            throw new ChannelNotFound(slug);
+        }
+    }
+
 
 }
