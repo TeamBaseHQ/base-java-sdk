@@ -26,14 +26,17 @@ public class OkHttpClient implements HttpClientInterface {
             // Prepare the headers
             this.prepareHeaders(request, requestBuilder);
 
+            // Request Body
+            RequestBody requestBody = null;
+
             // The Request has Body
             if (this.requestHasBody(request)) {
                 // Prepare the Body
-                RequestBody requestBody = this.buildRequestBody(request);
-
-                // Add body to the request
-                requestBuilder.method(request.getMethod(), requestBody);
+                requestBody = this.buildRequestBody(request);
             }
+
+            // Add body to the request
+            requestBuilder.method(request.getMethod(), requestBody);
 
             // Build the Request
             okhttp3.Request okHttpRequest = requestBuilder.build();
