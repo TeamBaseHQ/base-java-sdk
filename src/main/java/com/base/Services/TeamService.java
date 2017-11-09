@@ -4,12 +4,12 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.Http.NotFound;
 import com.base.Exceptions.TeamNotFound;
+import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Team;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TeamService {
 
@@ -74,12 +74,61 @@ public class TeamService {
             parameters.put("description", description);
         }
 
-        parameters.put("name", name);
-        parameters.put("description", description);
-
         Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_PATCH, parameters);
         return (Team) Base.makeModel(Team.class, response.getBody());
     }
 
+    /**
+     * List all the Teams by Pages and Limit
+     *
+     * @param page  Page number
+     * @param limit Limit Value
+     * @return List of All the Teams
+     */
+    public List<Team> all(int page, int limit) {
+
+        ArrayList<String> parameters = new ArrayList<>();
+
+
+        if (page != 0) {
+            parameters.add("page=".concat(Integer.toString(page)));
+        }
+        if (limit != 0) {
+            parameters.add("limit=".concat(Integer.toString(limit)));
+        }
+
+        String URL = Helpers.buildUrlWithQuery("/teams", parameters);
+
+        try {
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            Team[] teamArray = (Team[]) Base.makeModel(Team[].class, response.getBody());
+            System.out.println(response.getBody());
+            return new ArrayList<>(Arrays.asList(teamArray));
+
+        } catch (BaseHttpException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get all teams by pages
+     *
+     * @param page Pages
+     * @return List of Teams
+     */
+    public List<Team> all(int page) {
+        return all(page, 0);
+    }
+
+    /**
+     * Get all teams
+     *
+     * @return List of Teams
+     */
+    public List<Team> all() {
+        return all(0, 0);
+    }
 
 }
