@@ -1,0 +1,10 @@
+com.base
+com.base.Auth
+com.base.Exceptions
+com.base.Exceptions.Http
+com.base.Http.Clients
+com.base.Http.Request
+com.base.Http.Response
+com.base.Http.Response.Handlers
+com.base.Models
+com.base.Services
