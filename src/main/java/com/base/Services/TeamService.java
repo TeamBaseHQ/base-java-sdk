@@ -117,7 +117,6 @@ public class TeamService {
 
         Response response = this.base.sendRequest(URL, Request.METHOD_GET);
         Team[] teamArray = (Team[]) Base.makeModel(Team[].class, response.getBody());
-        System.out.println(response.getBody());
         return new ArrayList<>(Arrays.asList(teamArray));
     }
 
