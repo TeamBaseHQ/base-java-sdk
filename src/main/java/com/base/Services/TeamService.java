@@ -101,7 +101,7 @@ public class TeamService {
      * @param limit Limit Value
      * @return List of All the Teams
      */
-    public List<Team> all(int page, int limit) {
+    public List<Team> all(int page, int limit) throws BaseHttpException {
 
         ArrayList<String> parameters = new ArrayList<>();
 
@@ -115,17 +115,10 @@ public class TeamService {
 
         String URL = Helpers.buildUrlWithQuery("/teams", parameters);
 
-        try {
-            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
-            Team[] teamArray = (Team[]) Base.makeModel(Team[].class, response.getBody());
-            System.out.println(response.getBody());
-            return new ArrayList<>(Arrays.asList(teamArray));
-
-        } catch (BaseHttpException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+        Team[] teamArray = (Team[]) Base.makeModel(Team[].class, response.getBody());
+        System.out.println(response.getBody());
+        return new ArrayList<>(Arrays.asList(teamArray));
     }
 
     /**
@@ -134,7 +127,7 @@ public class TeamService {
      * @param page Pages
      * @return List of Teams
      */
-    public List<Team> all(int page) {
+    public List<Team> all(int page) throws BaseHttpException {
         return all(page, 0);
     }
 
@@ -143,7 +136,7 @@ public class TeamService {
      *
      * @return List of Teams
      */
-    public List<Team> all() {
+    public List<Team> all() throws BaseHttpException {
         return all(0, 0);
     }
 
