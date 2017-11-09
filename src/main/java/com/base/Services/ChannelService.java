@@ -59,4 +59,22 @@ public class ChannelService {
     }
 
 
+    /**
+     * Delete Channel by Slug
+     *
+     * @param teamSlug
+     * @param channelSlug
+     *
+     * @throws ChannelNotFound
+     */
+    public boolean deleteChannel(String teamSlug, String channelSlug) throws ChannelNotFound {
+        try {
+            Response response = this.base.sendRequest("/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug), Request.METHOD_DELETE);
+            return true;
+        } catch (BaseHttpException e) {
+            throw new ChannelNotFound(channelSlug);
+        }
+    }
+
+
 }
