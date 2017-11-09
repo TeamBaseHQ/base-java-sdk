@@ -79,6 +79,22 @@ public class TeamService {
     }
 
     /**
+     * Delete Team by Slug
+     *
+     * @param slug Team of slug
+     * @throws TeamNotFound
+     */
+    public boolean deleteTeam(String slug) throws TeamNotFound {
+
+        try {
+            Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_DELETE);
+            return true;
+        } catch (BaseHttpException e) {
+            throw new TeamNotFound(slug);
+        }
+    }
+
+    /**
      * List all the Teams by Pages and Limit
      *
      * @param page  Page number
