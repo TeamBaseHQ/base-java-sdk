@@ -20,7 +20,7 @@ public class ChannelService {
     /**
      * Create channel by slug name of team
      *
-     * @param slug
+     * @param teamSlug
      * @param name
      * @param description
      * @param color
@@ -29,7 +29,7 @@ public class ChannelService {
      * @throws BaseHttpException
      */
 
-    public Channel createChannel(String slug, String name, String description, String color, String is_private) throws BaseHttpException {
+    public Channel createChannel(String teamSlug, String name, String description, String color, String is_private) throws BaseHttpException {
         Map<String, String> parameters = new HashMap<>();
 
         parameters.put("name", name);
@@ -37,24 +37,24 @@ public class ChannelService {
         parameters.put("color", color);
         parameters.put("is_private", is_private);
 
-        Response response = this.base.sendRequest("/teams/".concat(slug).concat("/channels"), Request.METHOD_POST, parameters);
+        Response response = this.base.sendRequest("/teams/".concat(teamSlug).concat("/channels"), Request.METHOD_POST, parameters);
         return (Channel) Base.makeModel(Channel.class, response.getBody());
     }
 
     /**
      * Get All Channels By Slug
      *
-     * @param slug Slug of Team
+     * @param teamSlug Slug of Team
      * @return List of Channel in slug
      * @throws ChannelNotFound
      */
-    public List<Channel> allChannels(String slug) throws ChannelNotFound {
+    public List<Channel> allChannels(String teamSlug) throws ChannelNotFound {
         try {
-            Response response = base.sendRequest("/teams/".concat(slug).concat("/channels"), Request.METHOD_GET);
+            Response response = base.sendRequest("/teams/".concat(teamSlug).concat("/channels"), Request.METHOD_GET);
             Channel[] channelArray = (Channel[]) Base.makeModel(Channel[].class, response.getBody());
             return new ArrayList<>(Arrays.asList(channelArray));
         } catch (BaseHttpException e) {
-            throw new ChannelNotFound(slug);
+            throw new ChannelNotFound(teamSlug);
         }
     }
 
@@ -110,6 +110,16 @@ public class ChannelService {
         String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug);
         Response response = this.base.sendRequest(URL, Request.METHOD_PATCH, parameters);
         return (Channel) Base.makeModel(Channel.class, response.getBody());
+    }
+
+    public Channel getChannel(String teamSlug,String channelSlug) throws ChannelNotFound {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug);
+            Response response = base.sendRequest(URL, Request.METHOD_GET);
+           return  (Channel) Base.makeModel(Channel.class, response.getBody());
+        } catch (BaseHttpException e) {
+            throw new ChannelNotFound(teamSlug);
+        }
     }
 
 }
