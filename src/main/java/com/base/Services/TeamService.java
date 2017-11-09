@@ -53,8 +53,33 @@ public class TeamService {
     }
 
 
+    /**
+     * Update a Team
+     *
+     * @param name        Team Name
+     * @param description Team Description
+     * @param slug        slug name of team
+     * @return Updated Team
+     * @throws BaseHttpException Exception
+     */
+    public Team updateTeam(String name, String description, String slug) throws BaseHttpException {
+        Map<String, String> parameters = new HashMap<>();
 
 
+        if (!name.isEmpty()) {
+            parameters.put("name", name);
+        }
+
+        if (!description.isEmpty()) {
+            parameters.put("description", description);
+        }
+
+        parameters.put("name", name);
+        parameters.put("description", description);
+
+        Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_PATCH, parameters);
+        return (Team) Base.makeModel(Team.class, response.getBody());
+    }
 
 
 }
