@@ -6,6 +6,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.ResponseModel;
+import com.base.Services.TeamService;
 import com.base.Services.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +21,8 @@ public final class Base {
     private BaseClient client;
 
     private UserService userService;
+
+    private TeamService teamService;
 
     public Base() {
         this.client = new BaseClient();
@@ -44,15 +47,6 @@ public final class Base {
         this.client = client;
     }
 
-    public BaseClient getClient() {
-        return client;
-    }
-
-    public Base setClient(BaseClient client) {
-        this.client = client;
-        return this;
-    }
-
     /**
      * Make Model.
      *
@@ -69,6 +63,14 @@ public final class Base {
         return gson.fromJson(jData, model);
     }
 
+    public BaseClient getClient() {
+        return client;
+    }
+
+    public Base setClient(BaseClient client) {
+        this.client = client;
+        return this;
+    }
 
     public Response sendRequest(String endpoint, String method)
             throws BaseHttpException {
@@ -102,6 +104,7 @@ public final class Base {
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters, Map<String, String>
             headers, Map<String, File> files, AccessToken accessToken, Response response) throws BaseHttpException {
         Request request = new Request(endpoint, method);
+
         request.setHeaders(headers)
                 .setFiles(files)
                 .setParameters(parameters)
@@ -135,7 +138,12 @@ public final class Base {
         return this.userService;
     }
 
+    public TeamService teamService() {
+        return this.teamService;
+    }
+
     private void bootstrapServices() {
         this.userService = new UserService(this);
+        this.teamService = new TeamService(this);
     }
 }

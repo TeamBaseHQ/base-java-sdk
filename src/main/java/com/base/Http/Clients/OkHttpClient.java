@@ -26,8 +26,15 @@ public class OkHttpClient implements HttpClientInterface {
             // Prepare the headers
             this.prepareHeaders(request, requestBuilder);
 
-            // Prepare the Body
-            RequestBody requestBody = this.buildRequestBody(request);
+            // Request Body
+            RequestBody requestBody = null;
+
+            // The Request has Body
+            if (this.requestHasBody(request)) {
+                // Prepare the Body
+                requestBody = this.buildRequestBody(request);
+            }
+
             // Add body to the request
             requestBuilder.method(request.getMethod(), requestBody);
 
@@ -56,6 +63,12 @@ public class OkHttpClient implements HttpClientInterface {
         }
     }
 
+    private boolean requestHasBody(Request request) {
+        return request.getMethod().equalsIgnoreCase(Request.METHOD_PATCH) ||
+                request.getMethod().equalsIgnoreCase(Request.METHOD_POST) ||
+                request.getMethod().equalsIgnoreCase(Request.METHOD_PUT);
+    }
+
     private RequestBody buildRequestBody(Request request) throws Exception {
         // Request is multipart
         if (this.requestIsMultipart(request)) {
@@ -73,9 +86,7 @@ public class OkHttpClient implements HttpClientInterface {
     }
 
     private boolean requestIsMultipart(Request request) {
-        return (request.getMethod().equalsIgnoreCase(Request.METHOD_GET) ||
-                request.getMethod().equalsIgnoreCase(Request.METHOD_POST) ||
-                request.getMethod().equalsIgnoreCase(Request.METHOD_DELETE)) &&
+        return (request.getMethod().equalsIgnoreCase(Request.METHOD_POST)) &&
                 (!request.getParameters().isEmpty() || !request.getFiles().isEmpty());
     }
 

@@ -1,5 +1,6 @@
 package com.base.Services;
 
+
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.UserNotFound;
@@ -56,6 +57,39 @@ public class UserService {
         Response response = this.base.sendRequest("/users", Request.METHOD_POST, parameters);
         return (User) Base.makeModel(User.class, response.getBody());
     }
+
+    /**
+     * Update a User.
+     *
+     * @param name Name
+     * @param email Email
+     * @param password Password
+     *
+     * @return Updated User
+     *
+     * @throws BaseHttpException Exception.
+     */
+    public User updateUser(String name, String email, String password) throws BaseHttpException {
+        Map<String, String> parameters = new HashMap<>();
+
+        if (!name.isEmpty()) {
+            parameters.put("name", name);
+        }
+
+        if (!email.isEmpty()) {
+            parameters.put("email", email);
+        }
+
+        if (!password.isEmpty()) {
+            parameters.put("password", password);
+            parameters.put("password_confirmation", password);
+        }
+
+        Response response = this.base.sendRequest("/users/me", Request.METHOD_PATCH, parameters);
+        System.out.println(response.getBody());
+        return (User) Base.makeModel(User.class, response.getBody());
+    }
+
 
     /**
      * Upload Current User's Profile Picture.
