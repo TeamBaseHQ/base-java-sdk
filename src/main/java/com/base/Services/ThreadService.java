@@ -4,6 +4,7 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.Http.NotFound;
+import com.base.Exceptions.ThreadNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Thread;
@@ -52,13 +53,34 @@ public class ThreadService {
      */
     public List<Thread> listChannelThreads(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
         try {
-            String urlEndPoint = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads");
-            Response response = this.base.sendRequest(urlEndPoint, Request.METHOD_GET);
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads");
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             Thread[] threadsArray = (Thread[]) Base.makeModel(Thread[].class, response.getBody());
             return new ArrayList<>(Arrays.asList(threadsArray));
         } catch (NotFound e) {
             throw new ChannelNotFound(channelSlug);
         }
     }
+
+    /**
+     * Show Channel's Thread
+     *
+     * @param teamSlug    Team Slug Name
+     * @param channelSlug Channel Slug Name
+     * @param threadSlug  Thread Slug Name
+     * @return Thread
+     * @throws ThreadNotFound
+     * @throws BaseHttpException
+     */
+    public Thread showChannelThread(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug);
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            return (Thread) Base.makeModel(Thread.class, response.getBody());
+        } catch (NotFound e) {
+            throw new ThreadNotFound(threadSlug);
+        }
+    }
+
 
 }
