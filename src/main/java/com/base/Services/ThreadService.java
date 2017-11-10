@@ -82,5 +82,56 @@ public class ThreadService {
         }
     }
 
+    /**
+     * Delete Thread Channel
+     *
+     * @param teamSlug    Team Slug Name
+     * @param channelSlug Channel Slug
+     * @param threadSlug  Thread Slug Name
+     * @throws ThreadNotFound    Exception
+     * @throws BaseHttpException Exception
+     */
+    public boolean deleteChannelThread(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug);
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
+            return true;
+        } catch (NotFound e) {
+            throw new ThreadNotFound(threadSlug);
+        }
+    }
+
+
+    /**
+     * Update Channel Thread
+     *
+     * @param teamSlug Team Slug
+     * @param channelSlug Channel Slug
+     * @param threadSlug Thread Slug
+     * @param threadSubject Thread Subject
+     * @param threadDescription Thread Description
+     * @return Thread
+     * @throws BaseHttpException
+     */
+    public Thread updateChannelThread(String teamSlug, String channelSlug, String threadSlug, String threadSubject, String threadDescription) throws BaseHttpException, ThreadNotFound {
+        Map<String, String> parameters = new HashMap<>();
+        if (!threadSubject.isEmpty()) {
+            parameters.put("subject", threadSubject);
+        }
+
+        if (!threadDescription.isEmpty()) {
+            parameters.put("description", threadDescription);
+        }
+
+        String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug);
+        try{
+            Response response = this.base.sendRequest(URL, Request.METHOD_PATCH, parameters);
+            return (Thread) Base.makeModel(Thread.class, response.getBody());
+        }catch (NotFound e){
+            throw  new ThreadNotFound(threadSlug);
+        }
+
+    }
 
 }
