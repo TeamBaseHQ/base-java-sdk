@@ -15,6 +15,16 @@ public class TeamMemberService {
         this.base = base;
     }
 
+    /**
+     * Get User of Team by Slug of Team
+     *
+     * @param teamSlug Team of Slug
+     * @param user_id User Id
+     * @return User
+     *
+     * @throws TeamNotFound
+     * @throws BaseHttpException
+     */
     public User showTeamMember(String teamSlug, String user_id) throws TeamNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/members/").concat(user_id);
