@@ -6,6 +6,7 @@ import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.Http.NotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
+import com.base.Models.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,6 @@ public class ChannelMemberService {
      * @throws BaseHttpException Exception
      * @throws ChannelNotFound   Exception
      */
-
     public boolean addTeamMember(String teamSlug, String channelSlug, String user_id) throws BaseHttpException, ChannelNotFound {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("user_id", user_id);
@@ -39,7 +39,27 @@ public class ChannelMemberService {
         } catch (NotFound e) {
             throw new ChannelNotFound(channelSlug);
         }
-
     }
+
+    /**
+     * Show Member By Channel
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @param user_id     User Id
+     * @return User
+     * @throws ChannelNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public User showChannelMember(String teamSlug, String channelSlug, String user_id) throws ChannelNotFound, BaseHttpException {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members/").concat(user_id);
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            return (User) Base.makeModel(User.class, response.getBody());
+        } catch (NotFound e) {
+            throw new ChannelNotFound(channelSlug);
+        }
+    }
+
 
 }
