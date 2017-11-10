@@ -6,6 +6,8 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.ResponseModel;
+import com.base.Services.ChannelService;
+import com.base.Services.TeamMemberService;
 import com.base.Services.TeamService;
 import com.base.Services.UserService;
 import com.google.gson.Gson;
@@ -23,6 +25,10 @@ public final class Base {
     private UserService userService;
 
     private TeamService teamService;
+
+   private TeamMemberService teamMemberService;
+
+    private ChannelService channelService;
 
     public Base() {
         this.client = new BaseClient();
@@ -142,8 +148,14 @@ public final class Base {
         return this.teamService;
     }
 
+    public TeamMemberService teamMemberService() { return this.teamMemberService; }
+
+    public ChannelService channelService() { return this.channelService; }
+
     private void bootstrapServices() {
         this.userService = new UserService(this);
         this.teamService = new TeamService(this);
+        this.teamMemberService = new TeamMemberService(this);
+        this.channelService = new ChannelService(this);
     }
 }
