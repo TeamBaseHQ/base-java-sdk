@@ -8,8 +8,7 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ChannelMemberService {
 
@@ -56,6 +55,26 @@ public class ChannelMemberService {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members/").concat(user_id);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             return (User) Base.makeModel(User.class, response.getBody());
+        } catch (NotFound e) {
+            throw new ChannelNotFound(channelSlug);
+        }
+    }
+
+    /**
+     * Show All Users in Channel
+     *
+     * @param teamSlug    Slug Name
+     * @param channelSlug Channel Slug
+     * @return List of Users
+     * @throws ChannelNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<User> showListChannelMember(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members");
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            User[] usersArray = (User[]) Base.makeModel(User[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(usersArray));
         } catch (NotFound e) {
             throw new ChannelNotFound(channelSlug);
         }
