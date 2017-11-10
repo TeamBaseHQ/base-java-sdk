@@ -8,6 +8,10 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TeamMemberService {
     private Base base;
 
@@ -19,9 +23,8 @@ public class TeamMemberService {
      * Get User of Team by Slug of Team
      *
      * @param teamSlug Team of Slug
-     * @param user_id User Id
+     * @param user_id  User Id
      * @return User
-     *
      * @throws TeamNotFound
      * @throws BaseHttpException
      */
@@ -35,5 +38,23 @@ public class TeamMemberService {
         }
     }
 
+    /**
+     * Show All Members in Team
+     *
+     * @param teamSlug Team Slug Name
+     * @return List of Users
+     *
+     * @throws TeamNotFound Exception
+     */
+    public List<User> showListTeamMember(String teamSlug) throws TeamNotFound, BaseHttpException {
+        String URL = "/teams/".concat(teamSlug).concat("/members");
+        try {
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            User[] usersArray = (User[]) Base.makeModel(User[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(usersArray));
+        } catch (NotFound e) {
+            throw new TeamNotFound(teamSlug);
+        }
+    }
 
 }
