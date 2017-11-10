@@ -26,7 +26,7 @@ public final class Base {
 
     private TeamService teamService;
 
-//    private TeamMemberService teamMemberService;
+   private TeamMemberService teamMemberService;
 
     private ChannelService channelService;
 
@@ -148,18 +148,14 @@ public final class Base {
         return this.teamService;
     }
 
-    /*public TeamMemberService teamMemberService() {
-        return this.teamMemberService;
-    }*/
+    public TeamMemberService teamMemberService() { return this.teamMemberService; }
 
     public ChannelService channelService() { return this.channelService; }
-
-
 
     private void bootstrapServices() {
         this.userService = new UserService(this);
         this.teamService = new TeamService(this);
-        //this.teamMemberService = new TeamMemberService(this);
+        this.teamMemberService = new TeamMemberService(this);
         this.channelService = new ChannelService(this);
     }
 }
