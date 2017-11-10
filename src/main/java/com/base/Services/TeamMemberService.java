@@ -43,7 +43,6 @@ public class TeamMemberService {
      *
      * @param teamSlug Team Slug Name
      * @return List of Users
-     *
      * @throws TeamNotFound Exception
      */
     public List<User> showListTeamMember(String teamSlug) throws TeamNotFound, BaseHttpException {
@@ -56,5 +55,25 @@ public class TeamMemberService {
             throw new TeamNotFound(teamSlug);
         }
     }
+
+    /**
+     * Delete Team Members by Team Slug Name
+     *
+     * @param teamSlug Name of Slug
+     * @param user_id  Id of User
+     * @return True or False
+     * @throws BaseHttpException Exception
+     * @throws TeamNotFound      Exception
+     */
+    public boolean deleteTeamMember(String teamSlug, String user_id) throws BaseHttpException, TeamNotFound {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/members/").concat(user_id);
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
+            return true;
+        } catch (NotFound e) {
+            throw new TeamNotFound(teamSlug);
+        }
+    }
+
 
 }
