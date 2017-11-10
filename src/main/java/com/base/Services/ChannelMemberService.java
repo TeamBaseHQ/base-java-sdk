@@ -81,4 +81,24 @@ public class ChannelMemberService {
     }
 
 
+    /**
+     * Delete Channel Member
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @param user_id     User Id
+     * @throws BaseHttpException Exception
+     * @throws ChannelNotFound   Exception
+     */
+    public boolean deleteChannelMember(String teamSlug, String channelSlug, String user_id) throws BaseHttpException, ChannelNotFound {
+        String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members/").concat(user_id);
+        try {
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
+            return true;
+        } catch (NotFound e) {
+            throw new ChannelNotFound(channelSlug);
+        }
+    }
+
+
 }
