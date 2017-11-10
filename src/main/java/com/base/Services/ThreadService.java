@@ -8,8 +8,7 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Thread;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ThreadService {
     private Base base;
@@ -41,4 +40,25 @@ public class ThreadService {
             throw new ChannelNotFound(channelSlug);
         }
     }
+
+    /**
+     * List of All Channels Threads
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @return List of Threads
+     * @throws ChannelNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Thread> listChannelThreads(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+        try {
+            String urlEndPoint = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads");
+            Response response = this.base.sendRequest(urlEndPoint, Request.METHOD_GET);
+            Thread[] threadsArray = (Thread[]) Base.makeModel(Thread[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(threadsArray));
+        } catch (NotFound e) {
+            throw new ChannelNotFound(channelSlug);
+        }
+    }
+
 }
