@@ -8,9 +8,7 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class TeamMemberService {
     private Base base;
@@ -73,6 +71,30 @@ public class TeamMemberService {
         } catch (NotFound e) {
             throw new TeamNotFound(teamSlug);
         }
+    }
+
+    /**
+     * Add Member into Team
+     *
+     * @param teamSlug Team Slug Name
+     * @param user_id  User Id
+     *
+     * @return Boolean Value True or False
+     *
+     * @throws BaseHttpException Exception
+     * @throws TeamNotFound      Exception
+     */
+    public boolean addTeamMember(String teamSlug, String user_id) throws BaseHttpException, TeamNotFound {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("user_id", user_id);
+        String URL = "/teams/".concat(teamSlug).concat("/members");
+        try {
+            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters);
+            return true;
+        } catch (NotFound e) {
+            throw new TeamNotFound(teamSlug);
+        }
+
     }
 
 
