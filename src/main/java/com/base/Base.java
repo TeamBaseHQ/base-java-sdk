@@ -6,6 +6,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.ResponseModel;
+import com.base.Services.ChannelMemberService;
 import com.base.Services.ChannelService;
 import com.base.Services.TeamMemberService;
 import com.base.Services.TeamService;
@@ -18,6 +19,8 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
+import static javax.swing.text.html.HTML.Tag.HEAD;
+
 public final class Base {
 
     private BaseClient client;
@@ -29,6 +32,8 @@ public final class Base {
    private TeamMemberService teamMemberService;
 
     private ChannelService channelService;
+
+    private ChannelMemberService channelMemberService;
 
     public Base() {
         this.client = new BaseClient();
@@ -152,10 +157,15 @@ public final class Base {
 
     public ChannelService channelService() { return this.channelService; }
 
+    public ChannelMemberService channelMemberService() {
+        return this.channelMemberService;
+    }
+
     private void bootstrapServices() {
         this.userService = new UserService(this);
         this.teamService = new TeamService(this);
         this.teamMemberService = new TeamMemberService(this);
         this.channelService = new ChannelService(this);
+        this.channelMemberService = new ChannelMemberService(this);
     }
 }
