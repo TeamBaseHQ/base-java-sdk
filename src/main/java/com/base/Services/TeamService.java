@@ -101,7 +101,7 @@ public class TeamService {
      * @param limit Limit Value
      * @return List of All the Teams
      */
-    public List<Team> all(int page, int limit) throws BaseHttpException {
+    public List<Team> getAllTeams(int page, int limit) throws BaseHttpException {
 
         ArrayList<String> parameters = new ArrayList<>();
 
@@ -126,8 +126,8 @@ public class TeamService {
      * @param page Pages
      * @return List of Teams
      */
-    public List<Team> all(int page) throws BaseHttpException {
-        return all(page, 0);
+    public List<Team> getAllTeams(int page) throws BaseHttpException {
+        return getAllTeams(page, 0);
     }
 
     /**
@@ -135,8 +135,8 @@ public class TeamService {
      *
      * @return List of Teams
      */
-    public List<Team> all() throws BaseHttpException {
-        return all(0, 0);
+    public List<Team> getAllTeams() throws BaseHttpException {
+        return getAllTeams(0, 0);
     }
 
 }
