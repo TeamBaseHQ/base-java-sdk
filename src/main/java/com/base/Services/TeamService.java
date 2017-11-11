@@ -58,11 +58,11 @@ public class TeamService {
      *
      * @param name        Team Name
      * @param description Team Description
-     * @param slug        slug name of team
+     * @param teamSlug        slug name of team
      * @return Updated Team
      * @throws BaseHttpException Exception
      */
-    public Team updateTeam(String name, String description, String slug) throws BaseHttpException {
+    public Team updateTeam(String teamSlug, String name, String description) throws BaseHttpException {
         Map<String, String> parameters = new HashMap<>();
 
 
@@ -74,7 +74,7 @@ public class TeamService {
             parameters.put("description", description);
         }
 
-        Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_PATCH, parameters);
+        Response response = this.base.sendRequest("/teams/".concat(teamSlug), Request.METHOD_PATCH, parameters);
         return (Team) Base.makeModel(Team.class, response.getBody());
     }
 
