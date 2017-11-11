@@ -28,7 +28,7 @@ public class ChannelMemberService {
      * @throws BaseHttpException Exception
      * @throws ChannelNotFound   Exception
      */
-    public boolean addTeamMember(String teamSlug, String channelSlug, String user_id) throws BaseHttpException, ChannelNotFound {
+    public boolean addChannelMember(String teamSlug, String channelSlug, String user_id) throws BaseHttpException, ChannelNotFound {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("user_id", user_id);
         String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members");
