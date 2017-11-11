@@ -29,7 +29,7 @@ public class ThreadService {
      * @throws BaseHttpException Exception
      * @throws ChannelNotFound   Exception
      */
-    public Thread createThreadMessage(String teamSlug, String channelSlug, String subject, String description) throws BaseHttpException, ChannelNotFound {
+    public Thread addChannelThread(String teamSlug, String channelSlug, String subject, String description) throws BaseHttpException, ChannelNotFound {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("subject", subject);
         parameters.put("description", description);
@@ -51,7 +51,7 @@ public class ThreadService {
      * @throws ChannelNotFound   Exception
      * @throws BaseHttpException Exception
      */
-    public List<Thread> listChannelThreads(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+    public List<Thread> getAllChannelThreads(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads");
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
@@ -72,7 +72,7 @@ public class ThreadService {
      * @throws ThreadNotFound
      * @throws BaseHttpException
      */
-    public Thread showChannelThread(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+    public Thread getChannelThread(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
