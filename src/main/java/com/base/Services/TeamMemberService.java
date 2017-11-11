@@ -26,7 +26,7 @@ public class TeamMemberService {
      * @throws TeamNotFound
      * @throws BaseHttpException
      */
-    public User showTeamMember(String teamSlug, String user_id) throws TeamNotFound, BaseHttpException {
+    public User getTeamMember(String teamSlug, String user_id) throws TeamNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/members/").concat(user_id);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
@@ -43,7 +43,7 @@ public class TeamMemberService {
      * @return List of Users
      * @throws TeamNotFound Exception
      */
-    public List<User> showListTeamMember(String teamSlug) throws TeamNotFound, BaseHttpException {
+    public List<User> getAllTeamMembers(String teamSlug) throws TeamNotFound, BaseHttpException {
         String URL = "/teams/".concat(teamSlug).concat("/members");
         try {
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
