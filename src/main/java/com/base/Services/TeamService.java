@@ -39,16 +39,16 @@ public class TeamService {
     /**
      * Get Team By Slug.
      *
-     * @param slug
+     * @param teamSlug
      * @return Team
      * @throws TeamNotFound
      */
-    public Team getTeam(String slug) throws TeamNotFound, BaseHttpException {
+    public Team getTeam(String teamSlug) throws TeamNotFound, BaseHttpException {
         try {
-            Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_GET);
+            Response response = this.base.sendRequest("/teams/".concat(teamSlug), Request.METHOD_GET);
             return (Team) Base.makeModel(Team.class, response.getBody());
         } catch (NotFound e) {
-            throw new TeamNotFound(slug);
+            throw new TeamNotFound(teamSlug);
         }
     }
 
@@ -58,11 +58,11 @@ public class TeamService {
      *
      * @param name        Team Name
      * @param description Team Description
-     * @param slug        slug name of team
+     * @param teamSlug        slug name of team
      * @return Updated Team
      * @throws BaseHttpException Exception
      */
-    public Team updateTeam(String name, String description, String slug) throws BaseHttpException {
+    public Team updateTeam(String teamSlug, String name, String description) throws BaseHttpException {
         Map<String, String> parameters = new HashMap<>();
 
 
@@ -74,7 +74,7 @@ public class TeamService {
             parameters.put("description", description);
         }
 
-        Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_PATCH, parameters);
+        Response response = this.base.sendRequest("/teams/".concat(teamSlug), Request.METHOD_PATCH, parameters);
         return (Team) Base.makeModel(Team.class, response.getBody());
     }
 
@@ -101,7 +101,7 @@ public class TeamService {
      * @param limit Limit Value
      * @return List of All the Teams
      */
-    public List<Team> all(int page, int limit) throws BaseHttpException {
+    public List<Team> getAllTeams(int page, int limit) throws BaseHttpException {
 
         ArrayList<String> parameters = new ArrayList<>();
 
@@ -126,8 +126,8 @@ public class TeamService {
      * @param page Pages
      * @return List of Teams
      */
-    public List<Team> all(int page) throws BaseHttpException {
-        return all(page, 0);
+    public List<Team> getAllTeams(int page) throws BaseHttpException {
+        return getAllTeams(page, 0);
     }
 
     /**
@@ -135,8 +135,8 @@ public class TeamService {
      *
      * @return List of Teams
      */
-    public List<Team> all() throws BaseHttpException {
-        return all(0, 0);
+    public List<Team> getAllTeams() throws BaseHttpException {
+        return getAllTeams(0, 0);
     }
 
 }
