@@ -39,16 +39,16 @@ public class TeamService {
     /**
      * Get Team By Slug.
      *
-     * @param slug
+     * @param teamSlug
      * @return Team
      * @throws TeamNotFound
      */
-    public Team getTeam(String slug) throws TeamNotFound, BaseHttpException {
+    public Team getTeam(String teamSlug) throws TeamNotFound, BaseHttpException {
         try {
-            Response response = this.base.sendRequest("/teams/".concat(slug), Request.METHOD_GET);
+            Response response = this.base.sendRequest("/teams/".concat(teamSlug), Request.METHOD_GET);
             return (Team) Base.makeModel(Team.class, response.getBody());
         } catch (NotFound e) {
-            throw new TeamNotFound(slug);
+            throw new TeamNotFound(teamSlug);
         }
     }
 
