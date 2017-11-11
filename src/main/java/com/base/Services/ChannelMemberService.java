@@ -50,7 +50,7 @@ public class ChannelMemberService {
      * @throws ChannelNotFound   Exception
      * @throws BaseHttpException Exception
      */
-    public User showChannelMember(String teamSlug, String channelSlug, String user_id) throws ChannelNotFound, BaseHttpException {
+    public User getChannelMember(String teamSlug, String channelSlug, String user_id) throws ChannelNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members/").concat(user_id);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
@@ -69,7 +69,7 @@ public class ChannelMemberService {
      * @throws ChannelNotFound   Exception
      * @throws BaseHttpException Exception
      */
-    public List<User> showListChannelMember(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+    public List<User> getAllChannelMembers(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members");
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
@@ -79,7 +79,6 @@ public class ChannelMemberService {
             throw new ChannelNotFound(channelSlug);
         }
     }
-
 
     /**
      * Delete Channel Member
@@ -99,6 +98,4 @@ public class ChannelMemberService {
             throw new ChannelNotFound(channelSlug);
         }
     }
-
-
 }
