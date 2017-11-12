@@ -9,10 +9,7 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Message;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class MessageService {
 
@@ -90,6 +87,40 @@ public class MessageService {
         } catch (NotFound e) {
             throw new MessageNotFound(messageSlug);
         }
+    }
+
+    /**
+     * Update thread Message
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @param threadSlug
+     * @param messageSlug
+     * @param messageContent
+     * @param type
+     * @return Message
+     * @throws BaseHttpException Exception
+     * @throws MessageNotFound   Exception
+     */
+    public Message updateMessage(String teamSlug, String channelSlug, String threadSlug, String messageSlug, String messageContent, String type) throws BaseHttpException, MessageNotFound {
+        Map<String, String> parameters = new HashMap<>();
+        if (!messageContent.isEmpty()) {
+            parameters.put("content", messageContent);
+        }
+
+        if (!type.isEmpty()) {
+            parameters.put("type", type);
+        }
+
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug)
+                    .concat("/messages/").concat(messageSlug);
+            Response response = this.base.sendRequest(URL, Request.METHOD_PATCH, parameters);
+            return (Message) Base.makeModel(Message.class, response.getBody());
+        } catch (NotFound e) {
+            throw new MessageNotFound(messageSlug);
+        }
+
     }
 
 }
