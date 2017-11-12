@@ -123,4 +123,27 @@ public class MessageService {
 
     }
 
+    /**
+     * Delete Message
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @param threadSlug
+     * @param messageSlug
+     * @return boolean value
+     * @throws BaseHttpException Exception
+     * @throws MessageNotFound   Exception
+     */
+    public boolean deleteMessage(String teamSlug, String channelSlug, String threadSlug, String messageSlug) throws BaseHttpException, MessageNotFound {
+
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug).concat("/messages/").concat(messageSlug);
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
+            return true;
+        } catch (NotFound e) {
+            throw new MessageNotFound(messageSlug);
+        }
+    }
+
+
 }
