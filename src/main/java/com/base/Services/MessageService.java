@@ -18,5 +18,29 @@ public class MessageService {
         this.base = base;
     }
 
-
+    /**
+     * Create Message of Thread
+     *
+     * @param teamSlug    Message teamSlug
+     * @param channelSlug Message channelSlug
+     * @param threadSlug  Message threadSlug
+     * @param content     Message content
+     * @param type        Message type
+     * @return Message
+     * @throws ThreadNotFound
+     * @throws BaseHttpException
+     */
+    public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type) throws ThreadNotFound, BaseHttpException {
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("content", content);
+        parameters.put("type", type);
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").
+                    concat(threadSlug).concat("/messages");
+            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters);
+            return (Message) Base.makeModel(Message.class, response.getBody());
+        } catch (NotFound e) {
+            throw new ThreadNotFound(teamSlug);
+        }
+    }
 }
