@@ -3,6 +3,7 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.Http.NotFound;
+import com.base.Exceptions.MessageNotFound;
 import com.base.Exceptions.ThreadNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
@@ -66,6 +67,28 @@ public class MessageService {
             return new ArrayList<>(Arrays.asList(messagesArray));
         } catch (NotFound e) {
             throw new ThreadNotFound(threadSlug);
+        }
+    }
+
+    /**
+     * Show thread message
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @param threadSlug
+     * @param messageSlug
+     * @return Message
+     * @throws MessageNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public Message getMessage(String teamSlug, String channelSlug, String threadSlug, String messageSlug) throws MessageNotFound, BaseHttpException {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug)
+                    .concat("/messages/").concat(messageSlug);
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            return (Message) Base.makeModel(Message.class, response.getBody());
+        } catch (NotFound e) {
+            throw new MessageNotFound(messageSlug);
         }
     }
 
