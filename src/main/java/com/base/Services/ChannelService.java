@@ -52,7 +52,7 @@ public class ChannelService {
      * @throws TeamNotFound
      * @throws BaseHttpException
      */
-    public List<Channel> allChannels(String teamSlug) throws TeamNotFound, BaseHttpException {
+    public List<Channel> getAllChannels(String teamSlug) throws TeamNotFound, BaseHttpException {
         try {
             Response response = base.sendRequest("/teams/".concat(teamSlug).concat("/channels"), Request.METHOD_GET);
             Channel[] channelArray = (Channel[]) Base.makeModel(Channel[].class, response.getBody());
@@ -118,6 +118,15 @@ public class ChannelService {
         }
     }
 
+    /**
+     * Get Channel By Name
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @return Channel
+     * @throws ChannelNotFound
+     * @throws BaseHttpException
+     */
     public Channel getChannel(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug);

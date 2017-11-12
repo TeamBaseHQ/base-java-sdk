@@ -33,6 +33,8 @@ public final class Base {
 
     private ThreadService threadService;
 
+    private MessageService messageService;
+
     public Base() {
         this.client = new BaseClient();
         this.bootstrapServices();
@@ -163,6 +165,10 @@ public final class Base {
         return this.threadService;
     }
 
+    public MessageService messageService() {
+        return this.messageService;
+    }
+
     private void bootstrapServices() {
         this.userService = new UserService(this);
         this.teamService = new TeamService(this);
@@ -170,5 +176,6 @@ public final class Base {
         this.channelService = new ChannelService(this);
         this.channelMemberService = new ChannelMemberService(this);
         this.threadService = new ThreadService(this);
+        this.messageService = new MessageService(this);
     }
 }

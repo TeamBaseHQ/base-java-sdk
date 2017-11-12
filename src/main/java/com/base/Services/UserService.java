@@ -24,16 +24,16 @@ public class UserService {
     /**
      * Get User By ID.
      *
-     * @param id
+     * @param user_id
      * @return
      * @throws UserNotFound
      */
-    public User find(String id) throws UserNotFound {
+    public User getUser(String user_id) throws UserNotFound {
         try {
-            Response response = this.base.sendRequest("/users/".concat(id), Request.METHOD_GET);
+            Response response = this.base.sendRequest("/users/".concat(user_id), Request.METHOD_GET);
             return (User) Base.makeModel(User.class, response.getBody());
         } catch (BaseHttpException e) {
-            throw new UserNotFound(id);
+            throw new UserNotFound(user_id);
         }
     }
 
@@ -44,7 +44,7 @@ public class UserService {
      * @throws UserNotFound
      */
     public User getCurrentUser() throws UserNotFound {
-        return this.find("me");
+        return this.getUser("me");
     }
 
     public User createUser(String name, String email, String password) throws BaseHttpException {
