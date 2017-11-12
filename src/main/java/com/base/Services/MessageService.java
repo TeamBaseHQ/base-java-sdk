@@ -8,7 +8,10 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Message;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class MessageService {
 
@@ -43,4 +46,27 @@ public class MessageService {
             throw new ThreadNotFound(teamSlug);
         }
     }
+
+    /**
+     * List of all thread messages
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @param threadSlug  Thread Slug
+     * @return List of Messages
+     * @throws ThreadNotFound    Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Message> getAllMessages(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug)
+                    .concat("/messages/");
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            Message[] messagesArray = (Message[]) Base.makeModel(Message[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(messagesArray));
+        } catch (NotFound e) {
+            throw new ThreadNotFound(threadSlug);
+        }
+    }
+
 }
