@@ -12,17 +12,19 @@ public class InputError extends BaseHttpException {
     protected ErrorBag errorBag;
 
     /**
-     * Default Constructor
-     * @param code
-     * @param message
-     * @param response
+     * Construct {@link InputError} with specified code, message and response.
+     *
+     * @param code     Status Code
+     * @param message  Error Messsage
+     * @param response {@link Response}
      */
     public InputError(int code, String message, Response response) {
         super(code, message, response);
     }
 
     /**
-     * Get ErrorBag
+     * Return the Value of {@link ErrorBag}
+     *
      * @return ErrorBag
      */
     public ErrorBag getErrorBag() {
@@ -30,7 +32,8 @@ public class InputError extends BaseHttpException {
     }
 
     /**
-     * Set ErrorBag
+     * Set {@link ErrorBag}
+     *
      * @param errorBag
      * @return
      */
