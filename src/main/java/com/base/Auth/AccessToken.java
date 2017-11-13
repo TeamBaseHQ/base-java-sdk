@@ -18,7 +18,7 @@ public class AccessToken {
     private String refresh_token;
 
     /**
-     * Default Constructor with one argument which set access_token
+     * Construct {@link AccessToken} with specified access_token
      *
      * @param access_token
      */
@@ -27,10 +27,11 @@ public class AccessToken {
     }
 
     /**
-     * Default Constructor which get three arguments and set this three arguments
-     * @param access_token
-     * @param expired_in
-     * @param refresh_token
+     * Construct {@link AccessToken} with access_token,expired_in,refresh_token
+     *
+     * @param access_token  AccessToken of User
+     * @param expired_in    After how many time the access token will be expired
+     * @param refresh_token refresh token for the access token
      */
     public AccessToken(String access_token, String expired_in, String refresh_token) {
         this.access_token = access_token;
@@ -39,7 +40,8 @@ public class AccessToken {
     }
 
     /**
-     * Get AccessToken
+     * Return the  access_token of User
+     *
      * @return AccessToken
      */
     public String getAccessToken() {
@@ -47,7 +49,8 @@ public class AccessToken {
     }
 
     /**
-     *  Set access_token
+     * Set access_token
+     *
      * @param access_token
      * @return
      */
@@ -57,7 +60,8 @@ public class AccessToken {
     }
 
     /**
-     * Get ExpiredIn
+     * Get Return the  expired_in of User
+     *
      * @return ExpiredIn
      */
     public String getExpiredIn() {
@@ -65,7 +69,8 @@ public class AccessToken {
     }
 
     /**
-     *  Set expired_in
+     * Set expired_in
+     *
      * @param expired_in
      * @return
      */
@@ -75,7 +80,8 @@ public class AccessToken {
     }
 
     /**
-     * Get RefreshToken
+     * Get Return the  refresh_token of User
+     *
      * @return RefreshToken
      */
     public String getRefreshToken() {
@@ -83,7 +89,8 @@ public class AccessToken {
     }
 
     /**
-     *  Set refresh_token
+     * Set refresh_token
+     *
      * @param refresh_token
      * @return
      */
@@ -91,6 +98,7 @@ public class AccessToken {
         this.refresh_token = refresh_token;
         return this;
     }
+
 
     public String toString() {
         return this.getAccessToken();
