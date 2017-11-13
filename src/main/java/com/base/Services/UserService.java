@@ -15,8 +15,16 @@ import java.util.Map;
 
 public class UserService {
 
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public UserService(Base base) {
         this.base = base;
     }
@@ -61,12 +69,10 @@ public class UserService {
     /**
      * Update a User.
      *
-     * @param name Name
-     * @param email Email
+     * @param name     Name
+     * @param email    Email
      * @param password Password
-     *
      * @return Updated User
-     *
      * @throws BaseHttpException Exception.
      */
     public User updateUser(String name, String email, String password) throws BaseHttpException {

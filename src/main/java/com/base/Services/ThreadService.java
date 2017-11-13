@@ -12,8 +12,17 @@ import com.base.Models.Thread;
 import java.util.*;
 
 public class ThreadService {
+
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public ThreadService(Base base) {
         this.base = base;
     }
@@ -106,10 +115,10 @@ public class ThreadService {
     /**
      * Update Channel Thread
      *
-     * @param teamSlug Team Slug
-     * @param channelSlug Channel Slug
-     * @param threadSlug Thread Slug
-     * @param threadSubject Thread Subject
+     * @param teamSlug          Team Slug
+     * @param channelSlug       Channel Slug
+     * @param threadSlug        Thread Slug
+     * @param threadSubject     Thread Subject
      * @param threadDescription Thread Description
      * @return Thread
      * @throws BaseHttpException
@@ -125,11 +134,11 @@ public class ThreadService {
         }
 
         String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug);
-        try{
+        try {
             Response response = this.base.sendRequest(URL, Request.METHOD_PATCH, parameters);
             return (Thread) Base.makeModel(Thread.class, response.getBody());
-        }catch (NotFound e){
-            throw  new ThreadNotFound(threadSlug);
+        } catch (NotFound e) {
+            throw new ThreadNotFound(threadSlug);
         }
 
     }
