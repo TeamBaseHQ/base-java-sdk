@@ -3,17 +3,17 @@ package com.base.Auth;
 public class AccessToken {
 
     /**
-     * Access Token access_token
+     * Users {@link AccessToken} access_token
      */
     private String access_token;
 
     /**
-     * Access Token expired_in
+     * Users {@link AccessToken} expired_in
      */
     private String expired_in;
 
     /**
-     * Access Token refresh_token
+     * Users {@link AccessToken} refresh_token
      */
     private String refresh_token;
 
