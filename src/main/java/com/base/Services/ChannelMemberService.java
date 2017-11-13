@@ -12,8 +12,16 @@ import java.util.*;
 
 public class ChannelMemberService {
 
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public ChannelMemberService(Base base) {
         this.base = base;
     }
