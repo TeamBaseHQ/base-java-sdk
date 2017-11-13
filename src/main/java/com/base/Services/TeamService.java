@@ -13,8 +13,16 @@ import java.util.*;
 
 public class TeamService {
 
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public TeamService(Base base) {
         this.base = base;
     }
@@ -58,7 +66,7 @@ public class TeamService {
      *
      * @param name        Team Name
      * @param description Team Description
-     * @param teamSlug        slug name of team
+     * @param teamSlug    slug name of team
      * @return Updated Team
      * @throws BaseHttpException Exception
      */
