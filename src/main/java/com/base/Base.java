@@ -15,37 +15,73 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-import static javax.swing.text.html.HTML.Tag.HEAD;
-
 public final class Base {
 
+    /**
+     * {@link BaseClient} client
+     */
     private BaseClient client;
 
+    /**
+     * Create UserService Reference
+     */
     private UserService userService;
 
+    /**
+     * Create TeamService Reference
+     */
     private TeamService teamService;
 
-   private TeamMemberService teamMemberService;
+    /**
+     * Create TeamMemberService Reference
+     */
+    private TeamMemberService teamMemberService;
 
+    /**
+     * Create ChannelService Reference
+     */
     private ChannelService channelService;
 
+    /**
+     * Create ChannelMemberService Reference
+     */
     private ChannelMemberService channelMemberService;
 
+    /**
+     * Create ThreadService Reference
+     */
     private ThreadService threadService;
 
+    /**
+     * Create MessageService Reference
+     */
     private MessageService messageService;
 
+    /**
+     * Construct {@link Base} with all bootstrapServices
+     */
     public Base() {
         this.client = new BaseClient();
         this.bootstrapServices();
     }
 
+    /**
+     * Construct {@link Base} and set accessToken.
+     *
+     * @param accessToken Client access Token
+     */
     public Base(String accessToken) {
         this();
         this.getClient()
                 .setAccessToken(new AccessToken(accessToken));
     }
 
+    /**
+     * Construct {@link Base} wtih specified clientId and clientSecret
+     *
+     * @param clientId     Client ID
+     * @param clientSecret Client Secret
+     */
     public Base(String clientId, String clientSecret) {
         this();
         this.getClient()
@@ -53,6 +89,11 @@ public final class Base {
                 .setClientSecret(clientSecret);
     }
 
+    /**
+     * Construct {@link BaseClient}
+     *
+     * @param client baseClient
+     */
     public Base(BaseClient client) {
         this();
         this.client = client;
@@ -74,44 +115,112 @@ public final class Base {
         return gson.fromJson(jData, model);
     }
 
+    /**
+     * @return Base Client
+     */
     public BaseClient getClient() {
         return client;
     }
 
+    /**
+     * Set Base Client
+     *
+     * @param client
+     * @return
+     */
     public Base setClient(BaseClient client) {
         this.client = client;
         return this;
     }
 
+    /**
+     * Send {@link Request} with endpoint and method
+     *
+     * @param endpoint API EndPoint
+     * @param method   Method Type
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, new HashMap<>());
     }
 
+    /**
+     * Send {@link Request} with endpoint, method and Parameters
+     *
+     * @param endpoint   API EndPoint
+     * @param method     Method Type
+     * @param parameters Parameters
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, parameters, new HashMap<>());
     }
 
+    /**
+     * Send {@link Request} with endpoint, method, Parameters and Headers
+     *
+     * @param endpoint   API EndPoint
+     * @param method     Method Type
+     * @param parameters Parameters
+     * @param headers    Additional Headers
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters, Map<String, String>
             headers)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, parameters, headers, new HashMap<>());
     }
 
+    /**
+     * Send {@link Request} with endpoint, method, Parameters, Headers and Files
+     *
+     * @param endpoint   API EndPoint
+     * @param method     Method Type
+     * @param parameters Parameters
+     * @param files      Files that you want to upload
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters, Map<String, String>
             headers, Map<String, File> files)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, parameters, headers, files, null, null);
     }
 
-
+    /**
+     * Send {@link Request} with endpoint, method, Parameters, Headers, Files and AccessToken
+     *
+     * @param endpoint    API EndPoint
+     * @param method      Method Type
+     * @param parameters  Parameters
+     * @param files       Files that you want to upload
+     * @param accessToken AccessToken of User
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters, Map<String, String>
             headers, Map<String, File> files, AccessToken accessToken)
             throws BaseHttpException {
         return this.sendRequest(endpoint, method, parameters, headers, files, accessToken, null);
     }
 
+    /**
+     * Send {@link Request} with endpoint, method, Parameters, Headers, Files, AccessToken and Response
+     *
+     * @param endpoint    API EndPoint
+     * @param method      Method Type
+     * @param parameters  Parameters
+     * @param files       Files that you want to upload
+     * @param accessToken AccessToken of User
+     * @param response    Response
+     * @return Response
+     * @throws BaseHttpException Exception
+     */
     public Response sendRequest(String endpoint, String method, Map<String, String> parameters, Map<String, String>
             headers, Map<String, File> files, AccessToken accessToken, Response response) throws BaseHttpException {
         Request request = new Request(endpoint, method);
@@ -127,10 +236,10 @@ public final class Base {
     /**
      * Get User Access Token (Login).
      *
-     * @param email
-     * @param password
-     * @return
-     * @throws BaseException
+     * @param email    User Email
+     * @param password User Password
+     * @return AccessToken
+     * @throws BaseException Exception
      */
     public AccessToken getUserAccessToken(String email, String password) throws BaseException {
         try {
@@ -145,30 +254,72 @@ public final class Base {
         }
     }
 
+    /**
+     * Base UserService
+     *
+     * @return UserService
+     */
     public UserService userService() {
         return this.userService;
     }
 
+    /**
+     * Base TeamService
+     *
+     * @return TeamService
+     */
     public TeamService teamService() {
         return this.teamService;
     }
 
-    public TeamMemberService teamMemberService() { return this.teamMemberService; }
+    /**
+     * Base TeamMemberService
+     *
+     * @return TeamMemberService
+     */
+    public TeamMemberService teamMemberService() {
+        return this.teamMemberService;
+    }
 
-    public ChannelService channelService() { return this.channelService; }
+    /**
+     * Base ChannelService
+     *
+     * @return ChannelService
+     */
+    public ChannelService channelService() {
+        return this.channelService;
+    }
 
+    /**
+     * Base ChannelMemberService
+     *
+     * @return ChannelMemberService
+     */
     public ChannelMemberService channelMemberService() {
         return this.channelMemberService;
     }
 
+    /**
+     * Base ThreadService
+     *
+     * @return ThreadService
+     */
     public ThreadService threadService() {
         return this.threadService;
     }
 
+    /**
+     * Base MessageService
+     *
+     * @return MessageService
+     */
     public MessageService messageService() {
         return this.messageService;
     }
 
+    /**
+     * Generate All bootstrapServices
+     */
     private void bootstrapServices() {
         this.userService = new UserService(this);
         this.teamService = new TeamService(this);
