@@ -14,6 +14,14 @@ import java.util.Map;
 
 public class OkHttpClient implements HttpClientInterface {
 
+    /**
+     * Implementation of {@link HttpClientInterface}
+     *
+     * @param request  {@link Request}
+     * @param response {@link Response}
+     * @return Response
+     * @throws BaseHttpException
+     */
     @Override
     public Response send(Request request, Response response) throws BaseHttpException {
 
@@ -63,12 +71,25 @@ public class OkHttpClient implements HttpClientInterface {
         }
     }
 
+    /**
+     * This method accepts the {@link Request} if the request's method is patch, post or put then it will true or else false.
+     *
+     * @param request {@link Request}
+     * @return true or false on the basis of which type of request come.
+     */
     private boolean requestHasBody(Request request) {
         return request.getMethod().equalsIgnoreCase(Request.METHOD_PATCH) ||
                 request.getMethod().equalsIgnoreCase(Request.METHOD_POST) ||
                 request.getMethod().equalsIgnoreCase(Request.METHOD_PUT);
     }
 
+    /**
+     * It will Return the {@link com.base.Http.Request.RequestBody} on the basis of {@link Request}
+     *
+     * @param request {@link Request}
+     * @return ResponseBody {@link ResponseBody}
+     * @throws Exception
+     */
     private RequestBody buildRequestBody(Request request) throws Exception {
         // Request is multipart
         if (this.requestIsMultipart(request)) {
@@ -85,6 +106,12 @@ public class OkHttpClient implements HttpClientInterface {
         return formBodyBuilder.build();
     }
 
+    /**
+     * Accept the {@link Request} and return true if {@link Request} is Multipart or else not.
+     *
+     * @param request {@link Request}
+     * @return java.lang.Boolean
+     */
     private boolean requestIsMultipart(Request request) {
         return (request.getMethod().equalsIgnoreCase(Request.METHOD_POST)) &&
                 (!request.getParameters().isEmpty() || !request.getFiles().isEmpty());
@@ -126,11 +153,23 @@ public class OkHttpClient implements HttpClientInterface {
         }
     }
 
+    /**
+     * Get {@link MultipartBody.Builder}
+     *
+     * @return MultipartBody.Builder
+     * @throws Exception
+     */
     private MultipartBody.Builder getMultiPartBuilder() throws Exception {
         return new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
     }
 
+    /**
+     * It wll add parameters to the Builder
+     *
+     * @param builder
+     * @param parameters Map of
+     */
     private void addParamsToBuilder(FormBody.Builder builder, Map<String, String> parameters) {
         for (String key : parameters.keySet()) {
             String value = parameters.get(key);
