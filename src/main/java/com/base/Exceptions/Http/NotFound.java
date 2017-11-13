@@ -6,10 +6,11 @@ import com.base.Http.Response.Response;
 public class NotFound extends BaseHttpException {
 
     /**
-     * Not Found Exception Class
-     * @param code
-     * @param message
-     * @param response
+     * Construct {@link NotFound} with Status code , Error Message and Response
+     *
+     * @param code     Status Code
+     * @param message  Error Message
+     * @param response Response
      */
     public NotFound(int code, String message, Response response) {
         super(code, message, response);
