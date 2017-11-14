@@ -4,7 +4,6 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.MessageNotFound;
 import com.base.Exceptions.ThreadNotFound;
-import com.base.MainTest;
 import com.base.Models.Message;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,16 +11,14 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
-public class MessageServiceTest extends MainTest {
+public class MessageServiceTest extends AbstractBaseTest {
     /**
      * {@link Base}
      */
-    private static Base base;
+    private Base base;
 
     @BeforeClass
-    public static void setUp() {
+    public void setUp() {
         base = getBase();
         getUserAccessToken(base);
     }
@@ -92,7 +89,7 @@ public class MessageServiceTest extends MainTest {
     @Test
     public void deleteMessage() throws BaseHttpException, MessageNotFound {
         Boolean result = base.messageService().deleteMessage("twitter-1-2", "development", "deploy-to-aws-ecs", "bEeTV7H2-1-R3zU57MI");
-        assertEquals(result, true);
+        assertTrue(true);
     }
 
 }
