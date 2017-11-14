@@ -13,8 +13,16 @@ import java.util.*;
 
 public class MessageService {
 
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public MessageService(Base base) {
         this.base = base;
     }

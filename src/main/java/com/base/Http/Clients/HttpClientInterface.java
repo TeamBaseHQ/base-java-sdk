@@ -9,7 +9,7 @@ public interface HttpClientInterface {
      * Send Request.
      *
      * @param request
-     * @return
+     * @return Response
      * @throws BaseHttpException
      */
     public Response send(Request request, Response response) throws BaseHttpException;

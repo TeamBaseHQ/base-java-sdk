@@ -11,8 +11,17 @@ import com.base.Models.User;
 import java.util.*;
 
 public class TeamMemberService {
+
+    /**
+     * {@link Base}
+     */
     private Base base;
 
+    /**
+     * Construct Instance of Base Class
+     *
+     * @param base
+     */
     public TeamMemberService(Base base) {
         this.base = base;
     }
@@ -78,9 +87,7 @@ public class TeamMemberService {
      *
      * @param teamSlug Team Slug Name
      * @param user_id  User Id
-     *
      * @return Boolean Value True or False
-     *
      * @throws BaseHttpException Exception
      * @throws TeamNotFound      Exception
      */
