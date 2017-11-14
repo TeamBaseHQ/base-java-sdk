@@ -1,10 +1,12 @@
-package com.base;
+package com.base.Services;
 
 import com.base.Auth.AccessToken;
+import com.base.Base;
+import com.base.BaseClient;
 import com.base.Exceptions.BaseException;
+import junit.framework.TestCase;
 
-abstract public class MainTest {
-
+public class AbstractBaseTest extends TestCase {
     protected static void getUserAccessToken(Base base) {
         try {
             AccessToken accessToken = base.getUserAccessToken("sharvilshah1996@gmail.com", "abcd1234");
