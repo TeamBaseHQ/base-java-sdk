@@ -15,6 +15,9 @@ import static org.junit.Assert.assertEquals;
 
 public class TeamMemberServiceTest extends MainTest {
 
+    /**
+     * {@link Base}
+     */
     private static Base base;
 
     /**
