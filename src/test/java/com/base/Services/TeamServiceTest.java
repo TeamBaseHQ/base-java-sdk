@@ -4,7 +4,6 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
-import com.base.MainTest;
 import com.base.Models.Team;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,20 +11,18 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
-public class TeamServiceTest extends MainTest {
+public class TeamServiceTest extends AbstractBaseTest {
 
     /**
      * {@link Base}
      */
-    private static Base base;
+    private Base base;
 
     /**
      * User Login and Authentication
      */
     @BeforeClass
-    public static void setUp() {
+    public void setUp() {
         base = getBase();
         getUserAccessToken(base);
     }
@@ -79,6 +76,7 @@ public class TeamServiceTest extends MainTest {
 
     /**
      * Test case for
+     *
      * @throws BaseHttpException
      */
     @Test
