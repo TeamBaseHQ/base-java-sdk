@@ -3,7 +3,6 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
-import com.base.MainTest;
 import com.base.Models.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,20 +10,18 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
-public class ChannelMemberServiceTest extends MainTest {
+public class ChannelMemberServiceTest extends AbstractBaseTest {
 
     /**
      * {@link Base}
      */
-    private static Base base;
+    private Base base;
 
     /**
      * User Login and Authentication
      */
     @BeforeClass
-    public static void setUp() {
+    public void setUp() {
         base = getBase();
         getUserAccessToken(base);
     }
