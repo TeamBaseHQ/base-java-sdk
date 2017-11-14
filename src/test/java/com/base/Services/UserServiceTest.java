@@ -3,25 +3,22 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.UserNotFound;
-import com.base.MainTest;
 import com.base.Models.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
-public class UserServiceTest extends MainTest {
+public class UserServiceTest extends AbstractBaseTest {
 
     /**
      * {@link Base}
      */
-    private static Base base;
+    private Base base;
 
     /**
      * User Login and Authentication
      */
     @BeforeClass
-    public static void setUp() {
+    public void setUp() {
         base = getBase();
         getUserAccessToken(base);
     }
