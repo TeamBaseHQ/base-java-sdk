@@ -1,5 +1,6 @@
 package com.base.Services;
 
+import com.base.AbstractBaseTest;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.MessageNotFound;

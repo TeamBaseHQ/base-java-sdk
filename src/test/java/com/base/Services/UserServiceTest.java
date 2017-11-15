@@ -1,5 +1,6 @@
 package com.base.Services;
 
+import com.base.AbstractBaseTest;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.UserNotFound;
@@ -9,20 +10,27 @@ import org.junit.Test;
 
 public class UserServiceTest extends AbstractBaseTest {
 
+
     /**
      * {@link Base}
      */
-    private Base base;
+    protected Base base;
+
+
+    public Base getBase() {
+        return base;
+    }
 
     /**
      * User Login and Authentication
      */
     @BeforeClass
-    public void setUp() {
-        base = getBase();
+    public void setUp() throws Exception {
+        //super.setUp();
+        System.out.println("HI");
+        base = setupBase();
         getUserAccessToken(base);
     }
-
 
     /**
      * Test case for Get User
