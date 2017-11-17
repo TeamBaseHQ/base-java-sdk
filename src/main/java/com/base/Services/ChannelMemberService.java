@@ -4,6 +4,7 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.Http.NotFound;
+import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.User;
@@ -73,19 +74,58 @@ public class ChannelMemberService {
      *
      * @param teamSlug    Slug Name
      * @param channelSlug Channel Slug
+     * @param page        Page number
+     * @param limit       Limit Value
      * @return List of Users
      * @throws ChannelNotFound   Exception
      * @throws BaseHttpException Exception
      */
-    public List<User> getAllChannelMembers(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+    public List<User> getAllChannelMembers(String teamSlug, String channelSlug, int page, int limit) throws ChannelNotFound, BaseHttpException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+
+        if (page != 0) {
+            parameters.add("page=".concat(Integer.toString(page)));
+        }
+        if (limit != 0) {
+            parameters.add("limit=".concat(Integer.toString(limit)));
+        }
+
         try {
-            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members");
+            String URL = Helpers.buildUrlWithQuery("/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/members"), parameters);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             User[] usersArray = (User[]) Base.makeModel(User[].class, response.getBody());
             return new ArrayList<>(Arrays.asList(usersArray));
         } catch (NotFound e) {
             throw new ChannelNotFound(channelSlug);
         }
+    }
+
+    /**
+     * Show All Users in Channel
+     *
+     * @param teamSlug    Slug Name
+     * @param channelSlug Channel Slug
+     * @param page        Page number
+     * @return List of Users
+     * @throws ChannelNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<User> getAllChannelMembers(String teamSlug, String channelSlug, int page) throws ChannelNotFound, BaseHttpException {
+        return getAllChannelMembers(teamSlug, channelSlug, page, 0);
+    }
+
+    /**
+     * Show All Users in Channel
+     *
+     * @param teamSlug    Slug Name
+     * @param channelSlug Channel Slug
+     * @return List of Users
+     * @throws ChannelNotFound   Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<User> getAllChannelMembers(String teamSlug, String channelSlug) throws ChannelNotFound, BaseHttpException {
+        return getAllChannelMembers(teamSlug, channelSlug, 0, 0);
     }
 
     /**
