@@ -32,6 +32,31 @@ public class Channel extends BaseModel {
     private String slug;
 
     /**
+     * Channel Owner
+     */
+    private User owner;
+
+    /**
+     * Channel Owner
+     *
+     * @return User
+     */
+    public User getOwner() {
+        return owner;
+    }
+
+    /**
+     * Set Channel Owner
+     *
+     * @param owner
+     * @return
+     */
+    public Channel setOwner(User owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    /**
      * Return Channel Name
      *
      * @return Name
