@@ -1,26 +1,26 @@
 package com.base.Models;
 
-public class Preferences extends BaseModel {
+public class Preference extends BaseModel {
 
     /**
-     * Preferences category
+     * Preference category
      */
     private String category;
     /**
-     * Preferences name
+     * Preference name
      */
     private String name;
     /**
-     * Preferences value
+     * Preference value
      */
     private String value;
     /**
-     * Preferences user_id
+     * Preference user_id
      */
     private String user_id;
 
     /**
-     * Get Preferences Category
+     * Get Preference Category
      *
      * @return
      */
@@ -29,18 +29,18 @@ public class Preferences extends BaseModel {
     }
 
     /**
-     * Set Preferences Category
+     * Set Preference Category
      *
      * @param category
      * @return
      */
-    public Preferences setCategory(String category) {
+    public Preference setCategory(String category) {
         this.category = category;
         return this;
     }
 
     /**
-     * Get Preferences Name
+     * Get Preference Name
      *
      * @return
      */
@@ -49,18 +49,18 @@ public class Preferences extends BaseModel {
     }
 
     /**
-     * Set Preferences Name
+     * Set Preference Name
      *
      * @param name
      * @return
      */
-    public Preferences setName(String name) {
+    public Preference setName(String name) {
         this.name = name;
         return this;
     }
 
     /**
-     * Get Preferences Value
+     * Get Preference Value
      *
      * @return
      */
@@ -69,18 +69,18 @@ public class Preferences extends BaseModel {
     }
 
     /**
-     * Set Preferences Value
+     * Set Preference Value
      *
      * @param value
      * @return
      */
-    public Preferences setValue(String value) {
+    public Preference setValue(String value) {
         this.value = value;
         return this;
     }
 
     /**
-     * Get Preferences User_id
+     * Get Preference User_id
      *
      * @return
      */
@@ -89,12 +89,12 @@ public class Preferences extends BaseModel {
     }
 
     /**
-     * Set Preferences User_id
+     * Set Preference User_id
      *
      * @param user_id
      * @return
      */
-    public Preferences setUser_id(String user_id) {
+    public Preference setUser_id(String user_id) {
         this.user_id = user_id;
         return this;
     }
