@@ -5,6 +5,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.Http.NotFound;
 import com.base.Exceptions.TeamNotFound;
+import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Channel;
@@ -56,13 +57,26 @@ public class ChannelService {
      * Get All Channels By Slug
      *
      * @param teamSlug Slug of Team
+     * @param page     Page number
+     * @param limit    Limit Value
      * @return List of Channel in slug
-     * @throws TeamNotFound
-     * @throws BaseHttpException
+     * @throws TeamNotFound      Exception
+     * @throws BaseHttpException Exception
      */
-    public List<Channel> getAllChannels(String teamSlug) throws TeamNotFound, BaseHttpException {
+    public List<Channel> getAllChannels(String teamSlug, int page, int limit) throws TeamNotFound, BaseHttpException {
+        ArrayList<String> parameters = new ArrayList<>();
+
+        if (page != 0) {
+            parameters.add("page=".concat(Integer.toString(page)));
+        }
+        if (limit != 0) {
+            parameters.add("limit=".concat(Integer.toString(limit)));
+        }
+
+        String URL = Helpers.buildUrlWithQuery("/teams/".concat(teamSlug).concat("/channels"), parameters);
+
         try {
-            Response response = base.sendRequest("/teams/".concat(teamSlug).concat("/channels"), Request.METHOD_GET);
+            Response response = base.sendRequest(URL, Request.METHOD_GET);
             Channel[] channelArray = (Channel[]) Base.makeModel(Channel[].class, response.getBody());
             return new ArrayList<>(Arrays.asList(channelArray));
         } catch (NotFound e) {
@@ -70,6 +84,30 @@ public class ChannelService {
         }
     }
 
+    /**
+     * Get All Channels By Slug
+     *
+     * @param teamSlug Slug of Team
+     * @param page     Page number
+     * @return List of Channel in slug
+     * @throws TeamNotFound      Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Channel> getAllChannels(String teamSlug, int page) throws TeamNotFound, BaseHttpException {
+        return getAllChannels(teamSlug, page, 0);
+    }
+
+    /**
+     * Get All Channels By Slug
+     *
+     * @param teamSlug Slug of Team
+     * @return List of Channel in slug
+     * @throws TeamNotFound      Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Channel> getAllChannels(String teamSlug) throws TeamNotFound, BaseHttpException {
+        return getAllChannels(teamSlug, 0, 0);
+    }
 
     /**
      * Delete Channel by Slug

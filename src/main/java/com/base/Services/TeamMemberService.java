@@ -4,6 +4,7 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.Http.NotFound;
 import com.base.Exceptions.TeamNotFound;
+import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.User;
@@ -49,11 +50,22 @@ public class TeamMemberService {
      * Show All Members in Team
      *
      * @param teamSlug Team Slug Name
+     * @param page     Page number
+     * @param limit    Limit Value
      * @return List of Users
      * @throws TeamNotFound Exception
      */
-    public List<User> getAllTeamMembers(String teamSlug) throws TeamNotFound, BaseHttpException {
-        String URL = "/teams/".concat(teamSlug).concat("/members");
+    public List<User> getAllTeamMembers(String teamSlug, int page, int limit) throws TeamNotFound, BaseHttpException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+
+        if (page != 0) {
+            parameters.add("page=".concat(Integer.toString(page)));
+        }
+        if (limit != 0) {
+            parameters.add("limit=".concat(Integer.toString(limit)));
+        }
+        String URL = Helpers.buildUrlWithQuery("/teams/".concat(teamSlug).concat("/members"), parameters);
         try {
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             User[] usersArray = (User[]) Base.makeModel(User[].class, response.getBody());
@@ -61,6 +73,31 @@ public class TeamMemberService {
         } catch (NotFound e) {
             throw new TeamNotFound(teamSlug);
         }
+    }
+
+    /**
+     * Show All Members in Team
+     *
+     * @param teamSlug Team Slug Name
+     * @return List of Users
+     * @throws TeamNotFound
+     * @throws BaseHttpException
+     */
+    public List<User> getAllTeamMembers(String teamSlug) throws TeamNotFound, BaseHttpException {
+        return getAllTeamMembers(teamSlug, 0, 0);
+    }
+
+    /**
+     * Show All Members in Team
+     *
+     * @param teamSlug Team Slug Name
+     * @param page     Page number
+     * @return List of Users
+     * @throws TeamNotFound
+     * @throws BaseHttpException
+     */
+    public List<User> getAllTeamMembers(String teamSlug, int page) throws TeamNotFound, BaseHttpException {
+        return getAllTeamMembers(teamSlug, page, 0);
     }
 
     /**
