@@ -3,17 +3,17 @@ package com.base.Services;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.Http.NotFound;
-import com.base.Exceptions.PreferencesNotFound;
+import com.base.Exceptions.PreferenceNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
-import com.base.Models.Preferences;
+import com.base.Models.Preference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class PreferencesService {
+public class PreferenceService {
 
     /**
      * {@link Base}
@@ -25,7 +25,7 @@ public class PreferencesService {
      *
      * @param base
      */
-    public PreferencesService(Base base) {
+    public PreferenceService(Base base) {
         this.base = base;
     }
 
@@ -39,26 +39,26 @@ public class PreferencesService {
      * @return Preference
      * @throws BaseHttpException Exception
      */
-    public Preferences createPreferences(String name, String value, String category) throws BaseHttpException {
+    public Preference createPreference(String name, String value, String category) throws BaseHttpException {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("value", value);
         parameters.put("category", category);
         parameters.put("name", name);
         String URL = "/preferences/".concat(name);
         Response response = this.base.sendRequest(URL, Request.METHOD_PUT, parameters);
-        return (Preferences) Base.makeModel(Preferences.class, response.getBody());
+        return (Preference) Base.makeModel(Preference.class, response.getBody());
     }
 
     /**
-     * Get All The Preferences of User
+     * Get All The Preference of User
      *
-     * @return List of Preferences
+     * @return List of Preference
      * @throws BaseHttpException Exception
      */
-    public List<Preferences> getAllPreferencess() throws BaseHttpException {
+    public List<Preference> getAllPreferences() throws BaseHttpException {
         String URL = "/preferences";
         Response response = this.base.sendRequest(URL, Request.METHOD_GET);
-        Preferences[] preferencesArray = (Preferences[]) Base.makeModel(Preferences[].class, response.getBody());
+        Preference[] preferencesArray = (Preference[]) Base.makeModel(Preference[].class, response.getBody());
         return new ArrayList<>(Arrays.asList(preferencesArray));
     }
 
@@ -67,35 +67,35 @@ public class PreferencesService {
      * Get Perfereneces by name
      *
      * @param name
-     * @return Preferences
-     * @throws PreferencesNotFound Exception
-     * @throws BaseHttpException   Exception
+     * @return Preference
+     * @throws PreferenceNotFound Exception
+     * @throws BaseHttpException  Exception
      */
-    public Preferences getPreferences(String name) throws PreferencesNotFound, BaseHttpException {
+    public Preference getPreference(String name) throws PreferenceNotFound, BaseHttpException {
         try {
             String URL = "/preferences/".concat(name);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
-            return (Preferences) Base.makeModel(Preferences.class, response.getBody());
+            return (Preference) Base.makeModel(Preference.class, response.getBody());
         } catch (NotFound e) {
-            throw new PreferencesNotFound(name);
+            throw new PreferenceNotFound(name);
         }
     }
 
     /**
-     * Delete Preferences By name
+     * Delete Preference By name
      *
      * @param name
      * @return Boolean
-     * @throws BaseHttpException   Exception
-     * @throws PreferencesNotFound Exception
+     * @throws BaseHttpException  Exception
+     * @throws PreferenceNotFound Exception
      */
-    public boolean deletePreferences(String name) throws BaseHttpException, PreferencesNotFound {
+    public boolean deletePreference(String name) throws BaseHttpException, PreferenceNotFound {
         try {
             String URL = "/preferences/".concat(name);
             Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
             return true;
         } catch (NotFound e) {
-            throw new PreferencesNotFound(name);
+            throw new PreferenceNotFound(name);
         }
     }
 
