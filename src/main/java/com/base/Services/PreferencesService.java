@@ -67,7 +67,7 @@ public class PreferencesService {
      * Get Perfereneces by name
      *
      * @param name
-     * @return
+     * @return Preferences
      * @throws PreferencesNotFound Exception
      * @throws BaseHttpException   Exception
      */
@@ -76,6 +76,24 @@ public class PreferencesService {
             String URL = "/preferences/".concat(name);
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             return (Preferences) Base.makeModel(Preferences.class, response.getBody());
+        } catch (NotFound e) {
+            throw new PreferencesNotFound(name);
+        }
+    }
+
+    /**
+     * Delete Preferences By name
+     *
+     * @param name
+     * @return Boolean
+     * @throws BaseHttpException   Exception
+     * @throws PreferencesNotFound Exception
+     */
+    public boolean deletePreferences(String name) throws BaseHttpException, PreferencesNotFound {
+        try {
+            String URL = "/preferences/".concat(name);
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
+            return true;
         } catch (NotFound e) {
             throw new PreferencesNotFound(name);
         }
