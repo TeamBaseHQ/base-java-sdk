@@ -153,5 +153,26 @@ public class MessageService {
         }
     }
 
+    /**
+     * Stare Thread Message
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @param threadSlug
+     * @param messageSlug
+     * @return boolean Value
+     * @throws BaseHttpException Exception
+     * @throws MessageNotFound   Exception
+     */
+    public boolean starThreadMessage(String teamSlug, String channelSlug, String threadSlug, String messageSlug) throws BaseHttpException, MessageNotFound {
+
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug).concat("/messages/").concat(messageSlug).concat("/star");
+            Response response = this.base.sendRequest(URL, Request.METHOD_POST);
+            return true;
+        } catch (NotFound e) {
+            throw new MessageNotFound(messageSlug);
+        }
+    }
 
 }
