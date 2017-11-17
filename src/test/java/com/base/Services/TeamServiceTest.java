@@ -6,6 +6,7 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
 import com.base.Models.Team;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,20 +16,6 @@ import java.util.List;
 public class TeamServiceTest extends AbstractBaseTest {
 
     /**
-     * {@link Base}
-     */
-    private Base base;
-
-    /**
-     * User Login and Authentication
-     */
-    @BeforeClass
-    public void setUp() {
-        base = getBase();
-        getUserAccessToken(base);
-    }
-
-    /**
      * Test Case for Create Team
      *
      * @throws BaseHttpException
@@ -36,7 +23,7 @@ public class TeamServiceTest extends AbstractBaseTest {
     @Test
     public void createTeam() throws BaseHttpException {
         Team team = base.teamService().createTeam("Twitter", "Twitter Team");
-        assertEquals(team.getName(), "Twitter Team");
+        Assert.assertEquals(team.getName(), "Twitter Team");
     }
 
     /**
@@ -48,7 +35,7 @@ public class TeamServiceTest extends AbstractBaseTest {
     @Test
     public void getTeam() throws BaseHttpException, TeamNotFound {
         Team team = base.teamService().getTeam("twitter-1-2");
-        assertEquals(team.getName(), "Twitter");
+        Assert.assertEquals(team.getName(), "Twitter");
     }
 
 
@@ -61,7 +48,7 @@ public class TeamServiceTest extends AbstractBaseTest {
     public void updateTeam() throws BaseHttpException {
 
         Team team = base.teamService().updateTeam("da", "Myteam", "dateam");
-        assertEquals(team.getSlug(), "dateam1");
+        Assert.assertEquals(team.getSlug(), "dateam1");
 
     }
 
@@ -87,7 +74,7 @@ public class TeamServiceTest extends AbstractBaseTest {
         for (int i = 0; i < Actual.size(); i++) {
             String actualName = Actual.get(i).getName();
             String expectName = expected.get(i);
-            assertEquals(actualName, expectName);
+            Assert.assertEquals(actualName, expectName);
         }
     }
 }

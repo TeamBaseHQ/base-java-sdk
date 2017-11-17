@@ -6,6 +6,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.MessageNotFound;
 import com.base.Exceptions.ThreadNotFound;
 import com.base.Models.Message;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,17 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MessageServiceTest extends AbstractBaseTest {
-    /**
-     * {@link Base}
-     */
-    private Base base;
-
-    @BeforeClass
-    public void setUp() {
-        base = getBase();
-        getUserAccessToken(base);
-    }
-
 
     /**
      * Test case for Create Message
@@ -34,7 +24,7 @@ public class MessageServiceTest extends AbstractBaseTest {
     @Test
     public void createMessage() throws ThreadNotFound, BaseHttpException {
         Message message = base.messageService().createMessage("twitter-1-2", "development", "deploy-to-aws-ecs", "Hello, How are you?", "text");
-        assertEquals(message.getContent(), "Hello, How are you?");
+        Assert.assertEquals(message.getContent(), "Hello, How are you?");
 
     }
 
@@ -51,7 +41,7 @@ public class MessageServiceTest extends AbstractBaseTest {
         for (int i = 0; i < Actual.size(); i++) {
             String actualName = Actual.get(i).getContent();
             String expectName = expected.get(i);
-            assertEquals(actualName, expectName);
+            Assert.assertEquals(actualName, expectName);
         }
 
     }
@@ -65,7 +55,7 @@ public class MessageServiceTest extends AbstractBaseTest {
     @Test
     public void getMessage() throws BaseHttpException, MessageNotFound {
         Message message = base.messageService().getMessage("twitter-1-2", "development", "deploy-to-aws-ecs", "bEeTV7H2-1-R3zU57MI");
-        assertEquals(message.getContent(), "Hello, How are you?");
+        Assert.assertEquals(message.getContent(), "Hello, How are you?");
     }
 
     /**
@@ -78,7 +68,7 @@ public class MessageServiceTest extends AbstractBaseTest {
     public void updateMessage() throws BaseHttpException, MessageNotFound {
         Message message
                 = base.messageService().updateMessage("twitter-1-2", "development", "deploy-to-aws-ecs", "bEeTV7H2-1-R3zU57MI", "Hi", "");
-        assertEquals(message.getContent(), "Hi");
+        Assert.assertEquals(message.getContent(), "Hi");
     }
 
     /**
@@ -90,7 +80,7 @@ public class MessageServiceTest extends AbstractBaseTest {
     @Test
     public void deleteMessage() throws BaseHttpException, MessageNotFound {
         Boolean result = base.messageService().deleteMessage("twitter-1-2", "development", "deploy-to-aws-ecs", "bEeTV7H2-1-R3zU57MI");
-        assertTrue(true);
+        Assert.assertEquals(result, true);
     }
 
 }

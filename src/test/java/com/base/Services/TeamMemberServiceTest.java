@@ -5,6 +5,7 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
 import com.base.Models.User;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,21 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamMemberServiceTest extends AbstractBaseTest {
-
-    /**
-     * {@link Base}
-     */
-    private Base base;
-
-    /**
-     * User Login and Authentication
-     */
-    @BeforeClass
-    public void setUp() {
-        base = getBase();
-        getUserAccessToken(base);
-    }
-
 
     /**
      * Test Case for Get Team Member
@@ -38,7 +24,7 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
     public void getTeamMember() throws BaseHttpException, TeamNotFound {
 
         User user = base.teamMemberService().getTeamMember("twitter-1-2", "3");
-        assertEquals(user.getName(), "Sharvil");
+        Assert.assertEquals(user.getName(), "Sharvil");
     }
 
     /**
@@ -54,7 +40,7 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
         for (int i = 0; i < Actual.size(); i++) {
             String actualName = Actual.get(i).getName();
             String expectName = expected.get(i);
-            assertEquals(actualName, expectName);
+            Assert.assertEquals(actualName, expectName);
         }
 
     }
@@ -68,7 +54,7 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
     @Test
     public void deleteTeamMember() throws BaseHttpException, TeamNotFound {
         boolean result = base.teamMemberService().deleteTeamMember("twitter-1-2", "4");
-        assertEquals(true, result);
+        Assert.assertEquals(true, result);
 
     }
 
@@ -81,7 +67,7 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
     @Test
     public void addTeamMember() throws BaseHttpException, TeamNotFound {
         boolean result = base.teamMemberService().addTeamMember("dateam", "3");
-        assertEquals(true, result);
+        Assert.assertEquals(true, result);
     }
 
 }

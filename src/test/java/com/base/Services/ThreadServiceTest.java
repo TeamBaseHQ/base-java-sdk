@@ -6,6 +6,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.ThreadNotFound;
 import com.base.Models.Thread;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,19 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ThreadServiceTest extends AbstractBaseTest {
-    /**
-     * {@link Base}
-     */
-    private Base base;
-
-    /**
-     * User Login and Authentication
-     */
-    @BeforeClass
-    public void setUp() {
-        base = getBase();
-        getUserAccessToken(base);
-    }
 
     /**
      * Test case for Channel Thread
@@ -36,7 +24,7 @@ public class ThreadServiceTest extends AbstractBaseTest {
     @Test
     public void addChannelThread() throws BaseHttpException, ChannelNotFound {
         Thread thread = base.threadService().addChannelThread("twitter-1-2", "development", "Hello", "Hello World");
-        assertEquals(thread.getSubject(), "Hello");
+        Assert.assertEquals(thread.getSubject(), "Hello");
     }
 
     /**
@@ -52,7 +40,7 @@ public class ThreadServiceTest extends AbstractBaseTest {
         for (int i = 0; i < Actual.size(); i++) {
             String actualName = Actual.get(i).getSubject();
             String expectName = expected.get(i);
-            assertEquals(actualName, expectName);
+            Assert.assertEquals(actualName, expectName);
         }
     }
 
@@ -65,7 +53,7 @@ public class ThreadServiceTest extends AbstractBaseTest {
     @Test
     public void getChannelThread() throws ThreadNotFound, BaseHttpException {
         Thread thread = base.threadService().getChannelThread("twitter-1-2", "development", "hello");
-        assertEquals(thread.getDescription(), "Hello World");
+        Assert.assertEquals(thread.getDescription(), "Hello World");
     }
 
     /**
@@ -77,7 +65,7 @@ public class ThreadServiceTest extends AbstractBaseTest {
     @Test
     public void deleteChannelThread() throws ThreadNotFound, BaseHttpException {
         boolean result = base.threadService().deleteChannelThread("twitter-1-2", "development", "hello-1");
-        assertEquals(result, true);
+        Assert.assertEquals(result, true);
     }
 
     /**
@@ -89,7 +77,7 @@ public class ThreadServiceTest extends AbstractBaseTest {
     @Test
     public void updateChannelThread() throws BaseHttpException, ThreadNotFound {
         Thread thread = base.threadService().updateChannelThread("twitter-1-2", "development", "deploy-to-aws-ecs", "Hello", "");
-        assertEquals(thread.getSubject(), "Hello");
+        Assert.assertEquals(thread.getSubject(), "Hello");
     }
 
 }
