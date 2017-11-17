@@ -37,6 +37,31 @@ public class Channel extends BaseModel {
     private User owner;
 
     /**
+     * Channel Notification Meta
+     */
+    private String notification_meta;
+
+    /**
+     * Get Channel Notification Meta
+     *
+     * @return notification_meta
+     */
+    public String getNotification_meta() {
+        return notification_meta;
+    }
+
+    /**
+     * Set Channel Notification Meta
+     *
+     * @param notification_meta
+     * @return
+     */
+    public Channel setNotification_meta(String notification_meta) {
+        this.notification_meta = notification_meta;
+        return this;
+    }
+
+    /**
      * Channel Owner
      *
      * @return User
