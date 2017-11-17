@@ -154,7 +154,7 @@ public class MessageService {
     }
 
     /**
-     * Stare Thread Message
+     * Star Thread Message
      *
      * @param teamSlug
      * @param channelSlug
@@ -169,6 +169,28 @@ public class MessageService {
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug).concat("/messages/").concat(messageSlug).concat("/star");
             Response response = this.base.sendRequest(URL, Request.METHOD_POST);
+            return true;
+        } catch (NotFound e) {
+            throw new MessageNotFound(messageSlug);
+        }
+    }
+
+    /**
+     * UnStar Thread Message
+     *
+     * @param teamSlug
+     * @param channelSlug
+     * @param threadSlug
+     * @param messageSlug
+     * @return boolean Value
+     * @throws BaseHttpException Exception
+     * @throws MessageNotFound   Exception
+     */
+    public boolean unStarThreadMessage(String teamSlug, String channelSlug, String threadSlug, String messageSlug) throws BaseHttpException, MessageNotFound {
+
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug).concat("/messages/").concat(messageSlug).concat("/star");
+            Response response = this.base.sendRequest(URL, Request.METHOD_DELETE);
             return true;
         } catch (NotFound e) {
             throw new MessageNotFound(messageSlug);
