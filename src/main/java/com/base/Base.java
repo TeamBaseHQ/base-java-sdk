@@ -58,6 +58,11 @@ public final class Base {
     private MessageService messageService;
 
     /**
+     * Create PreferencesService Reference
+     */
+    private PreferencesService preferencesService;
+
+    /**
      * Construct {@link Base} with all bootstrapServices
      */
     public Base() {
@@ -318,6 +323,15 @@ public final class Base {
     }
 
     /**
+     * Base PreferencesService
+     *
+     * @return PreferencesService
+     */
+    public PreferencesService preferencesService() {
+        return this.preferencesService;
+    }
+
+    /**
      * Generate All bootstrapServices
      */
     private void bootstrapServices() {
@@ -328,5 +342,6 @@ public final class Base {
         this.channelMemberService = new ChannelMemberService(this);
         this.threadService = new ThreadService(this);
         this.messageService = new MessageService(this);
+        this.preferencesService = new PreferencesService(this);
     }
 }
