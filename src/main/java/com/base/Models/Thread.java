@@ -24,6 +24,31 @@ public class Thread extends BaseModel {
     private String slug;
 
     /**
+     * Thread Owner
+     */
+    private User owner;
+
+    /**
+     * Get Thread Owner
+     *
+     * @return User
+     */
+    public User getOwner() {
+        return owner;
+    }
+
+    /**
+     * Set Thread Owner
+     *
+     * @param owner
+     * @return
+     */
+    public Thread setOwner(User owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    /**
      * Return Thread Subject
      *
      * @return Subject

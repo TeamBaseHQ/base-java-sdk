@@ -33,6 +33,31 @@ public class Message extends BaseModel {
     private String slug;
 
     /**
+     * Message Owner
+     */
+    private User owner;
+
+    /**
+     * Get Message Owner
+     *
+     * @return User
+     */
+    public User getOwner() {
+        return owner;
+    }
+
+    /**
+     * Set Message Owner
+     *
+     * @param owner
+     * @return
+     */
+    public Message setOwner(User owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    /**
      * Message Content
      *
      * @return Content

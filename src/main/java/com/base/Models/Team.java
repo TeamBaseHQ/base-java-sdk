@@ -30,6 +30,31 @@ public class Team extends BaseModel {
     private String slug;
 
     /**
+     * Team Owner
+     */
+    private User owner;
+
+    /**
+     * Team Owner
+     *
+     * @return User
+     */
+    public User getOwner() {
+        return owner;
+    }
+
+    /**
+     * Set Owner of Team
+     *
+     * @param owner
+     * @return
+     */
+    public Team setOwner(User owner) {
+        this.owner = owner;
+        return this;
+    }
+
+    /**
      * Return User Name
      *
      * @return Name

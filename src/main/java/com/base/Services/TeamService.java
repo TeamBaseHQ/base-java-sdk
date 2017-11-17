@@ -7,6 +7,7 @@ import com.base.Exceptions.TeamNotFound;
 import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
+import com.base.Models.Message;
 import com.base.Models.Team;
 
 import java.util.*;
@@ -145,6 +146,25 @@ public class TeamService {
      */
     public List<Team> getAllTeams() throws BaseHttpException {
         return getAllTeams(0, 0);
+    }
+
+    /**
+     * Get All Stared Message of Team
+     *
+     * @param teamSlug SLug Name of Team
+     * @return List of Messages
+     * @throws TeamNotFound      Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Message> getAllStarredMessages(String teamSlug) throws TeamNotFound, BaseHttpException {
+        String URL = "/teams/".concat(teamSlug).concat("/starred-messages");
+        try {
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            Message[] messagesArray = (Message[]) Base.makeModel(Message[].class, response.getBody());
+            return new ArrayList<>(Arrays.asList(messagesArray));
+        } catch (NotFound e) {
+            throw new TeamNotFound(teamSlug);
+        }
     }
 
 }
