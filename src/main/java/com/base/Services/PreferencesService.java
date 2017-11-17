@@ -6,7 +6,10 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Preferences;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class PreferencesService {
 
@@ -42,6 +45,19 @@ public class PreferencesService {
         String URL = "/preferences/".concat(name);
         Response response = this.base.sendRequest(URL, Request.METHOD_PUT, parameters);
         return (Preferences) Base.makeModel(Preferences.class, response.getBody());
+    }
+
+    /**
+     * Get All The Preferences of User
+     *
+     * @return List of Preferences
+     * @throws BaseHttpException Exception
+     */
+    public List<Preferences> getAllPreferencess() throws BaseHttpException {
+        String URL = "/preferences";
+        Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+        Preferences[] preferencesArray = (Preferences[]) Base.makeModel(Preferences[].class, response.getBody());
+        return new ArrayList<>(Arrays.asList(preferencesArray));
     }
 
 }
