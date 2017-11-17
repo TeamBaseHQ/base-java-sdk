@@ -5,6 +5,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.Http.NotFound;
 import com.base.Exceptions.MessageNotFound;
 import com.base.Exceptions.ThreadNotFound;
+import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Message;
@@ -59,20 +60,61 @@ public class MessageService {
      * @param teamSlug    Team Slug
      * @param channelSlug Channel Slug
      * @param threadSlug  Thread Slug
+     * @param page        Page number
+     * @param limit       Limit Value
      * @return List of Messages
      * @throws ThreadNotFound    Exception
      * @throws BaseHttpException Exception
      */
-    public List<Message> getAllMessages(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+    public List<Message> getAllMessages(String teamSlug, String channelSlug, String threadSlug, int page, int limit) throws ThreadNotFound, BaseHttpException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+
+        if (page != 0) {
+            parameters.add("page=".concat(Integer.toString(page)));
+        }
+        if (limit != 0) {
+            parameters.add("limit=".concat(Integer.toString(limit)));
+        }
+        String URL = Helpers.buildUrlWithQuery("/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug)
+                .concat("/messages/"), parameters);
+
         try {
-            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").concat(threadSlug)
-                    .concat("/messages/");
             Response response = this.base.sendRequest(URL, Request.METHOD_GET);
             Message[] messagesArray = (Message[]) Base.makeModel(Message[].class, response.getBody());
             return new ArrayList<>(Arrays.asList(messagesArray));
         } catch (NotFound e) {
             throw new ThreadNotFound(threadSlug);
         }
+    }
+
+    /**
+     * List of all thread messages
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @param threadSlug  Thread Slug
+     * @param page        Page number
+     * @return List of Messages
+     * @throws ThreadNotFound    Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Message> getAllMessages(String teamSlug, String channelSlug, String threadSlug, int page) throws ThreadNotFound, BaseHttpException {
+        return getAllMessages(teamSlug, channelSlug, threadSlug, page, 0);
+    }
+
+    /**
+     * List of all thread messages
+     *
+     * @param teamSlug    Team Slug
+     * @param channelSlug Channel Slug
+     * @param threadSlug  Thread Slug
+     * @return List of Messages
+     * @throws ThreadNotFound    Exception
+     * @throws BaseHttpException Exception
+     */
+    public List<Message> getAllMessages(String teamSlug, String channelSlug, String threadSlug) throws ThreadNotFound, BaseHttpException {
+        return getAllMessages(teamSlug, channelSlug, threadSlug, 0, 0);
     }
 
     /**
