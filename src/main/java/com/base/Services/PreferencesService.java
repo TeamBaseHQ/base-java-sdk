@@ -2,6 +2,8 @@ package com.base.Services;
 
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
+import com.base.Exceptions.Http.NotFound;
+import com.base.Exceptions.PreferencesNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Preferences;
@@ -59,5 +61,25 @@ public class PreferencesService {
         Preferences[] preferencesArray = (Preferences[]) Base.makeModel(Preferences[].class, response.getBody());
         return new ArrayList<>(Arrays.asList(preferencesArray));
     }
+
+
+    /**
+     * Get Perfereneces by name
+     *
+     * @param name
+     * @return
+     * @throws PreferencesNotFound Exception
+     * @throws BaseHttpException   Exception
+     */
+    public Preferences getPreferences(String name) throws PreferencesNotFound, BaseHttpException {
+        try {
+            String URL = "/preferences/".concat(name);
+            Response response = this.base.sendRequest(URL, Request.METHOD_GET);
+            return (Preferences) Base.makeModel(Preferences.class, response.getBody());
+        } catch (NotFound e) {
+            throw new PreferencesNotFound(name);
+        }
+    }
+
 
 }
