@@ -4,7 +4,9 @@ import com.base.AbstractBaseTest;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.UserNotFound;
+import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Models.User;
+import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,9 +19,24 @@ public class UserServiceTest extends AbstractBaseTest {
      * @throws UserNotFound
      */
     @Test
-    public void getUser() throws UserNotFound {
-        User user = base.userService().getUser("2");
-        Assert.assertEquals(user.getName(), "Kunal Varma");
+    public void testGetUser() throws UserNotFound {
+        try {
+            User user = base.userService().getUser(String.valueOf(GetUserResponse.VALID_USER_ID));
+            Assert.assertEquals(user.getName(), GetUserResponse.USER_NAME);
+            Assert.assertEquals(user.getEmail(), GetUserResponse.USER_EMAIL);
+        } catch (UserNotFound e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    /**
+     * Test case for Get User that throws UserNotFound exception.
+     *
+     * @throws UserNotFound
+     */
+    @Test(expected = UserNotFound.class)
+    public void testGetUserThrowsNotFound() throws UserNotFound {
+        User user = base.userService().getUser("20000");
     }
 
     /**
