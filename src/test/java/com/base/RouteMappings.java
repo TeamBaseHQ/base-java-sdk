@@ -11,7 +11,7 @@ public class RouteMappings {
     public static Map<String, ServerResponseInterface> routes = new HashMap<>();
 
     public RouteMappings() {
-        routes.put("GET localhost/users/login", new UserLoginResponse());
+        routes.put("POST localhost/users/login", new UserLoginResponse());
     }
 
     public Map<String, ServerResponseInterface> getRoutes() {
