@@ -2,6 +2,7 @@ package com.base;
 
 import com.base.Http.Server.Responses.Channel.*;
 import com.base.Http.Server.Responses.ServerResponseInterface;
+import com.base.Http.Server.Responses.Team.CreateTeamResponse;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
 
@@ -15,6 +16,11 @@ public class RouteMappings {
     public RouteMappings() {
         registerUserMappings();
         registerChannelMappings();
+        registerTeamMapping();
+    }
+
+    private void registerTeamMapping() {
+        routes.put("POST localhost/teams", new CreateTeamResponse());
     }
 
     private void registerUserMappings() {
