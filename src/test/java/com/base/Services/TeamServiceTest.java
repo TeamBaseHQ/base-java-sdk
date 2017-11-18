@@ -7,6 +7,7 @@ import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Http.Server.Responses.Team.*;
+import com.base.Models.Message;
 import com.base.Models.Team;
 import org.junit.Assert;
 import org.junit.Test;
@@ -54,7 +55,6 @@ public class TeamServiceTest extends AbstractBaseTest {
         }
     }
 
-
     @Test
     public void testGetAllTeams() throws BaseHttpException, TeamNotFound {
 
@@ -91,8 +91,36 @@ public class TeamServiceTest extends AbstractBaseTest {
         Assert.assertEquals(team.getId(), UpdateTeamResponse.VALID_ID);
     }
 
+    @Test
     public void getDeleteTeam() throws TeamNotFound {
         boolean result = base.teamService().deleteTeam(DeleteTeamResponse.VALID_DELETED_TEAM_SLUG);
         Assert.assertEquals(true, result);
     }
+
+    @Test
+    public void testGetAllStaredMessages() throws BaseHttpException, TeamNotFound {
+
+        List<Message> messages = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            messages.add((Message) new Message().setContent("")
+                    .setThread_id(ListStaredMessagesResponse.VALID_TEAM_SLUG.concat("" + i))
+                    .setContent(ListStaredMessagesResponse.VALID_CONTENT)
+                    .setSlug(ListStaredMessagesResponse.VALID_MESSAGE_SLUG.concat("" + i))
+                    .setSender_id(ListStaredMessagesResponse.VALID_SENDER_ID.concat("" + i))
+                    .setSender_type(ListStaredMessagesResponse.VALID_SENDER_TYPE)
+                    .setType(ListStaredMessagesResponse.VALID_TYPE)
+                    .setId(ListStaredMessagesResponse.VALID_ID + i));
+        }
+        try {
+            List<Message> ActualTeam = base.teamService().getAllStarredMessages(ListStaredMessagesResponse.VALID_TEAM_SLUG);
+            for (int i = 0; i < ActualTeam.size(); i++) {
+                String actualName = ActualTeam.get(i).getSender_id();
+                String expectName = messages.get(i).getSender_id();
+                Assert.assertEquals(actualName, expectName);
+            }
+        } catch (TeamNotFound e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
 }
