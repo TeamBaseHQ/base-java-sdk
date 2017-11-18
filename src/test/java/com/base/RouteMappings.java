@@ -5,6 +5,7 @@ import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.Team.CreateTeamResponse;
 import com.base.Http.Server.Responses.Team.GetAllTeamsResponse;
 import com.base.Http.Server.Responses.Team.GetTeamResponse;
+import com.base.Http.Server.Responses.Team.UpdateTeamResponse;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
 
@@ -26,6 +27,7 @@ public class RouteMappings {
         routes.put("GET localhost/teams/" + GetTeamResponse.VALID_TEAM_SLUG,
                 new GetUserResponse());
         routes.put("GET localhost/teams", new GetAllTeamsResponse());
+        routes.put("PATCH localhost/teams/".concat(UpdateTeamResponse.VALID_SLUG), new UpdateTeamResponse());
     }
 
     private void registerUserMappings() {
