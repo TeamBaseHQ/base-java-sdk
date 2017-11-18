@@ -22,7 +22,7 @@ public class BaseTest extends AbstractBaseTest {
         parameters.put("password", UserLoginResponse.VALID_PASSWORD);
 
         Response response = this.base.sendRequest("/users/login", Request.METHOD_POST, parameters);
-        System.out.println(response.getBody());
+
         AccessToken accessToken = (AccessToken) Base.makeModel(AccessToken.class, response.getBody());
         Assert.assertEquals(accessToken.getAccessToken(), UserLoginResponse.VALID_ACCESS_TOKEN);
     }

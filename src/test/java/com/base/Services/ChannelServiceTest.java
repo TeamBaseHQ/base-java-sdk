@@ -33,7 +33,6 @@ public class ChannelServiceTest extends AbstractBaseTest {
         parameters.put("is_private", CreateChannelResponse.VALID_STATUS);
 
         Response response = this.base.sendRequest("/teams/".concat(CreateChannelResponse.VALID_TEAM_SLUG).concat("/channels"), Request.METHOD_POST, parameters);
-        System.out.println(response.getBody());
         Channel channel = (Channel) Base.makeModel(Channel.class, response.getBody());
         Assert.assertEquals(channel.getName(), CreateChannelResponse.VALID_NAME);
         Assert.assertEquals(channel.getSlug(), CreateChannelResponse.VALID_CHANNEL_SLUG);
@@ -90,8 +89,7 @@ public class ChannelServiceTest extends AbstractBaseTest {
         parameters.put("color", UpdateChannelResponse.VALID_COLOR);
         parameters.put("is_private", UpdateChannelResponse.VALID_STATUS);
 
-        Response response = this.base.sendRequest("/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/").concat(UpdateChannelResponse.VALID_CHANNEL_SLUG), Request.METHOD_POST, parameters);
-        System.out.println(response.getBody());
+        Response response = this.base.sendRequest("/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/").concat(UpdateChannelResponse.VALID_CHANNEL_SLUG), Request.METHOD_PATCH, parameters);
         Channel channel = (Channel) Base.makeModel(Channel.class, response.getBody());
         Assert.assertEquals(channel.getName(), UpdateChannelResponse.VALID_NAME);
         Assert.assertEquals(channel.getSlug(), UpdateChannelResponse.VALID_CHANNEL_SLUG);

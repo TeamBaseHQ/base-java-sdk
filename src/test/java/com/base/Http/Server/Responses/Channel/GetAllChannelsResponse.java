@@ -42,8 +42,6 @@ public class GetAllChannelsResponse extends BaseResponse {
                     .setDescription(GetAllChannelsResponse.VALID_DESCRIPTION)
                     .setIs_private(GetAllChannelsResponse.VALID_STATUS)
                     .setSlug(GetAllChannelsResponse.VALID_CHANNEL_SLUG.concat("-" + i)));
-            System.out.println(GetAllChannelsResponse.VALID_NAME.concat(" " + i));
-            System.out.println(GetAllChannelsResponse.VALID_CHANNEL_SLUG.concat("-" + i));
         }
         return channels;
     }

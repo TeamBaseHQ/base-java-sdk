@@ -30,7 +30,7 @@ public class RouteMappings {
         routes.put("GET localhost/teams/".concat(GetChannelResponse.VALID_TEAM_SLUG).concat("/channels/").concat(GetChannelResponse.VALID_CHANNEL_SLUG),
                 new GetChannelResponse());
         routes.put("GET localhost/teams/".concat(GetAllChannelsResponse.VALID_TEAM_SLUG).concat("/channels"), new GetAllChannelsResponse());
-        routes.put("PETCH localhost/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(UpdateChannelResponse.VALID_CHANNEL_SLUG)),
+        routes.put("PATCH localhost/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(UpdateChannelResponse.VALID_CHANNEL_SLUG)),
                 new UpdateChannelResponse());
         routes.put("DELETE localhost/teams/".concat(DeleteChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(DeleteChannelResponse.VALID_CHANNEL_SLUG)),
                 new DeleteChannelResponse());
