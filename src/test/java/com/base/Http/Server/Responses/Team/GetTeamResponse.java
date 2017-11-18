@@ -35,6 +35,7 @@ public class GetTeamResponse extends BaseResponse {
                 .setName(VALID_NAME)
                 .setInvitation_code(VALID_INVITATION_CODE)
                 .setId(VALID_ID);
+
     }
 }
 

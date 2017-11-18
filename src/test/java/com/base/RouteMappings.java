@@ -22,7 +22,7 @@ public class RouteMappings {
     private void registerTeamMapping() {
         routes.put("POST localhost/teams", new CreateTeamResponse());
         routes.put("GET localhost/teams/" + GetTeamResponse.VALID_TEAM_SLUG,
-                new GetUserResponse());
+                new GetTeamResponse());
         routes.put("GET localhost/teams", new GetAllTeamsResponse());
         routes.put("PATCH localhost/teams/".concat(UpdateTeamResponse.VALID_SLUG), new UpdateTeamResponse());
         routes.put("DELETE localhost/teams/".concat(DeleteChannelResponse.VALID_TEAM_SLUG), new DeleteChannelResponse());

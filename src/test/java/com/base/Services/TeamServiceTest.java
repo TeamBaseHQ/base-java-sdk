@@ -93,7 +93,7 @@ public class TeamServiceTest extends AbstractBaseTest {
 
     @Test
     public void getDeleteTeam() throws TeamNotFound {
-        boolean result = base.teamService().deleteTeam(DeleteTeamResponse.VALID_DELETED_TEAM_SLUG);
+        boolean result = base.teamService().deleteTeam(DeleteTeamResponse.VALID_TEAM_SLUG);
         Assert.assertEquals(true, result);
     }
 
