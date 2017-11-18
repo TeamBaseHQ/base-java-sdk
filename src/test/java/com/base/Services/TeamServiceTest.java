@@ -9,6 +9,7 @@ import com.base.Http.Response.Response;
 import com.base.Http.Server.Responses.Team.CreateTeamResponse;
 import com.base.Http.Server.Responses.Team.GetAllTeamsResponse;
 import com.base.Http.Server.Responses.Team.GetTeamResponse;
+import com.base.Http.Server.Responses.Team.UpdateTeamResponse;
 import com.base.Models.Team;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,7 +33,6 @@ public class TeamServiceTest extends AbstractBaseTest {
         parameters.put("description", CreateTeamResponse.VALID_DESCRIPTION);
 
         Response response = this.base.sendRequest("/teams", Request.METHOD_POST, parameters);
-        System.out.println(response.getBody());
         Team team = (Team) Base.makeModel(Team.class, response.getBody());
         Assert.assertEquals(team.getName(), CreateTeamResponse.VALID_NAME);
         Assert.assertEquals(team.getInvitation_code(), CreateTeamResponse.VALID_INVITATION_CODE);
@@ -79,4 +79,18 @@ public class TeamServiceTest extends AbstractBaseTest {
         }
     }
 
+    @Test
+    public void testTeamUpdate() throws BaseHttpException {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("name", UpdateTeamResponse.VALID_NAME);
+        parameters.put("description", UpdateTeamResponse.VALID_DESCRIPTION);
+
+        Response response = this.base.sendRequest("/teams/".concat(UpdateTeamResponse.VALID_SLUG), Request.METHOD_PATCH, parameters);
+        Team team = (Team) Base.makeModel(Team.class, response.getBody());
+        Assert.assertEquals(team.getName(), UpdateTeamResponse.VALID_NAME);
+        Assert.assertEquals(team.getInvitation_code(), UpdateTeamResponse.VALID_INVITATION_CODE);
+        Assert.assertEquals(team.getDescription(), UpdateTeamResponse.VALID_DESCRIPTION);
+        Assert.assertEquals(team.getId(), UpdateTeamResponse.VALID_ID);
+    }
 }
