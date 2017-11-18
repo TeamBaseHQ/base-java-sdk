@@ -1,80 +1,126 @@
 package com.base.Services;
 
-
 import com.base.AbstractBaseTest;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
+import com.base.Http.Request.Request;
+import com.base.Http.Response.Response;
+import com.base.Http.Server.Responses.Team.*;
+import com.base.Models.Message;
 import com.base.Models.Team;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TeamServiceTest extends AbstractBaseTest {
 
     /**
-     * Test Case for Create Team
+     * Test case for Create Team
      *
      * @throws BaseHttpException
      */
     @Test
-    public void createTeam() throws BaseHttpException {
-        Team team = base.teamService().createTeam("Twitter", "Twitter Team");
-        Assert.assertEquals(team.getName(), "Twitter Team");
+    public void testTeamCreate() throws BaseHttpException {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("name", CreateTeamResponse.VALID_NAME);
+        parameters.put("description", CreateTeamResponse.VALID_DESCRIPTION);
+
+        Response response = this.base.sendRequest("/teams", Request.METHOD_POST, parameters);
+        Team team = (Team) Base.makeModel(Team.class, response.getBody());
+        Assert.assertEquals(team.getName(), CreateTeamResponse.VALID_NAME);
+        Assert.assertEquals(team.getInvitation_code(), CreateTeamResponse.VALID_INVITATION_CODE);
+        Assert.assertEquals(team.getDescription(), CreateTeamResponse.VALID_DESCRIPTION);
     }
 
     /**
-     * Test Case for Get Team
-     *
      * @throws BaseHttpException
      * @throws TeamNotFound
      */
     @Test
-    public void getTeam() throws BaseHttpException, TeamNotFound {
-        Team team = base.teamService().getTeam("twitter-1-2");
-        Assert.assertEquals(team.getName(), "Twitter");
+    public void testGetTeam() throws BaseHttpException, TeamNotFound {
+        try {
+            Team team = base.teamService().getTeam(GetTeamResponse.VALID_TEAM_SLUG);
+            Assert.assertEquals(team.getName(), GetTeamResponse.VALID_NAME);
+            Assert.assertEquals(team.getDescription(), GetTeamResponse.VALID_DESCRIPTION);
+            Assert.assertEquals(team.getSlug(), GetTeamResponse.VALID_TEAM_SLUG);
+            Assert.assertEquals(team.getInvitation_code(), GetTeamResponse.VALID_INVITATION_CODE);
+            Assert.assertEquals(team.getId(), GetTeamResponse.VALID_ID);
+        } catch (TeamNotFound e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
-
-    /**
-     * Test Case for Update Team
-     *
-     * @throws BaseHttpException
-     */
     @Test
-    public void updateTeam() throws BaseHttpException {
+    public void testGetAllTeams() throws BaseHttpException, TeamNotFound {
 
-        Team team = base.teamService().updateTeam("da", "Myteam", "dateam");
-        Assert.assertEquals(team.getSlug(), "dateam1");
+        List<Team> teams = new ArrayList<>();
 
-    }
+        for (int i = 1; i <= 3; i++) {
+            teams.add((Team) new Team().setInvitation_code(GetTeamResponse.VALID_INVITATION_CODE)
+                    .setName(GetAllTeamsResponse.VALID_NAME.concat(" " + i))
+                    .setDescription(GetAllTeamsResponse.VALID_DESCRIPTION)
+                    .setSlug(GetAllTeamsResponse.VALID_TEAM_SLUG.concat("-" + i))
+                    .setId(GetAllTeamsResponse.VALID_ID));
+        }
 
-    /**
-     * Test Case for Delete Team
-     *
-     * @throws TeamNotFound
-     */
-    @Test
-    public void deleteTeam() throws TeamNotFound {
-        boolean result = base.teamService().deleteTeam("dateam");
-    }
-
-    /**
-     * Test case for
-     *
-     * @throws BaseHttpException
-     */
-    @Test
-    public void getAllTeams() throws BaseHttpException {
-        List<String> expected = Arrays.asList("Twitter", "Amazon");
-        List<Team> Actual = base.teamService().getAllTeams(1);
-        for (int i = 0; i < Actual.size(); i++) {
-            String actualName = Actual.get(i).getName();
-            String expectName = expected.get(i);
+        List<Team> ActualTeam = base.teamService().getAllTeams();
+        for (int i = 0; i < ActualTeam.size(); i++) {
+            String actualName = ActualTeam.get(i).getName();
+            String expectName = teams.get(i).getName();
             Assert.assertEquals(actualName, expectName);
         }
     }
+
+    @Test
+    public void testTeamUpdate() throws BaseHttpException {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("name", UpdateTeamResponse.VALID_NAME);
+        parameters.put("description", UpdateTeamResponse.VALID_DESCRIPTION);
+
+        Response response = this.base.sendRequest("/teams/".concat(UpdateTeamResponse.VALID_SLUG), Request.METHOD_PATCH, parameters);
+        Team team = (Team) Base.makeModel(Team.class, response.getBody());
+        Assert.assertEquals(team.getName(), UpdateTeamResponse.VALID_NAME);
+        Assert.assertEquals(team.getInvitation_code(), UpdateTeamResponse.VALID_INVITATION_CODE);
+        Assert.assertEquals(team.getDescription(), UpdateTeamResponse.VALID_DESCRIPTION);
+        Assert.assertEquals(team.getId(), UpdateTeamResponse.VALID_ID);
+    }
+
+    @Test
+    public void getDeleteTeam() throws TeamNotFound {
+        boolean result = base.teamService().deleteTeam(DeleteTeamResponse.VALID_TEAM_SLUG);
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testGetAllStaredMessages() throws BaseHttpException, TeamNotFound {
+
+        List<Message> messages = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            messages.add((Message) new Message().setContent("")
+                    .setThread_id(ListStaredMessagesResponse.VALID_TEAM_SLUG.concat("" + i))
+                    .setContent(ListStaredMessagesResponse.VALID_CONTENT)
+                    .setSlug(ListStaredMessagesResponse.VALID_MESSAGE_SLUG.concat("" + i))
+                    .setSender_id(ListStaredMessagesResponse.VALID_SENDER_ID.concat("" + i))
+                    .setSender_type(ListStaredMessagesResponse.VALID_SENDER_TYPE)
+                    .setType(ListStaredMessagesResponse.VALID_TYPE)
+                    .setId(ListStaredMessagesResponse.VALID_ID + i));
+        }
+        try {
+            List<Message> ActualTeam = base.teamService().getAllStarredMessages(ListStaredMessagesResponse.VALID_TEAM_SLUG);
+            for (int i = 0; i < ActualTeam.size(); i++) {
+                String actualName = ActualTeam.get(i).getSender_id();
+                String expectName = messages.get(i).getSender_id();
+                Assert.assertEquals(actualName, expectName);
+            }
+        } catch (TeamNotFound e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
 }

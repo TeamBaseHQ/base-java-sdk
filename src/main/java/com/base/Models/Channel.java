@@ -42,6 +42,31 @@ public class Channel extends BaseModel {
     private String notification_meta;
 
     /**
+     * Channel is_private
+     */
+    private String is_private;
+
+    /**
+     * Return Channel is_private
+     *
+     * @return
+     */
+    public String getIs_private() {
+        return is_private;
+    }
+
+    /**
+     * Set Channel is_private
+     *
+     * @param is_private
+     * @return
+     */
+    public Channel setIs_private(String is_private) {
+        this.is_private = is_private;
+        return this;
+    }
+
+    /**
      * Get Channel Notification Meta
      *
      * @return notification_meta
@@ -82,7 +107,7 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Return Channel Name
+     * Get Channel Name
      *
      * @return Name
      */
@@ -91,16 +116,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Name
+     * Channel Name
      *
      * @param name
+     * @return
      */
-    public void setName(String name) {
+    public Channel setName(String name) {
         this.name = name;
+        return this;
     }
 
     /**
-     * Return Channel Description
+     * Get Channel Description
      *
      * @return Description
      */
@@ -109,16 +136,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Description
+     * Channel Description
      *
      * @param description
+     * @return
      */
-    public void setDescription(String description) {
+    public Channel setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     /**
-     * Return Channel Color
+     * Get Channel Color
      *
      * @return Color
      */
@@ -127,16 +156,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Color
+     * Channel Color
      *
      * @param color
+     * @return
      */
-    public void setColor(String color) {
+    public Channel setColor(String color) {
         this.color = color;
+        return this;
     }
 
     /**
-     * Return Channel Type
+     * Get Channel Type
      *
      * @return Type
      */
@@ -145,16 +176,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Type
+     * Channel Type
      *
      * @param type
+     * @return
      */
-    public void setType(String type) {
+    public Channel setType(String type) {
         this.type = type;
+        return this;
     }
 
     /**
-     * Return Channel User_id
+     * Get Channel User_id
      *
      * @return User_id
      */
@@ -163,16 +196,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel User_id
+     * Channel User_id
      *
      * @param user_id
+     * @return
      */
-    public void setUser_id(Integer user_id) {
+    public Channel setUser_id(Integer user_id) {
         this.user_id = user_id;
+        return this;
     }
 
     /**
-     * Return Channel Team_id
+     * Get Channel Team_id
      *
      * @return Team_id
      */
@@ -181,16 +216,18 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Team_id
+     * Channel Team_id
      *
      * @param team_id
+     * @return
      */
-    public void setTeam_id(Integer team_id) {
+    public Channel setTeam_id(Integer team_id) {
         this.team_id = team_id;
+        return this;
     }
 
     /**
-     * Return Channel Slug
+     * Get Channel Slug
      *
      * @return Slug
      */
@@ -199,12 +236,13 @@ public class Channel extends BaseModel {
     }
 
     /**
-     * Set Channel Slug
+     * Channel Slug
      *
      * @param slug
+     * @return
      */
-    public void setSlug(String slug) {
+    public Channel setSlug(String slug) {
         this.slug = slug;
+        return this;
     }
-
 }

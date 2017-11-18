@@ -42,6 +42,10 @@ public class Helpers {
      * @return URL
      */
     public static String buildUrlWithQuery(String url, List<String> parameters) {
+        if (parameters.size() < 1) {
+            return url;
+        }
+
         return url.concat("?").concat(Helpers.implode("&", parameters));
     }
 }
