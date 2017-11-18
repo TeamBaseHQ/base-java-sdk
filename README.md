@@ -1,3 +1,7 @@
+![Base Java SDK](https://user-images.githubusercontent.com/893057/32977981-78a521f2-cc5e-11e7-8748-45713b036a1e.png)
+
+[![Build Status](https://travis-ci.org/TeamBaseHQ/base-java-sdk.svg?branch=master)](https://travis-ci.org/TeamBaseHQ/base-java-sdk)
+
 Base Java SDK
 ==============
 Offical SDK for Java.
