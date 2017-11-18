@@ -7,10 +7,7 @@ import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
-import com.base.Http.Server.Responses.Channel.CreateChannelResponse;
-import com.base.Http.Server.Responses.Channel.GetAllChannelsResponse;
-import com.base.Http.Server.Responses.Channel.GetChannelResponse;
-import com.base.Http.Server.Responses.Channel.UpdateChannelResponse;
+import com.base.Http.Server.Responses.Channel.*;
 import com.base.Models.Channel;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,7 +48,7 @@ public class ChannelServiceTest extends AbstractBaseTest {
      * @throws TeamNotFound
      */
     @Test
-    public void getAllChannels() throws BaseHttpException, TeamNotFound {
+    public void testGetAllChannels() throws BaseHttpException, TeamNotFound {
 
         List<Channel> channels = new ArrayList<>();
 
@@ -75,8 +72,8 @@ public class ChannelServiceTest extends AbstractBaseTest {
      * @throws ChannelNotFound
      */
     @Test
-    public void deleteChannel() throws ChannelNotFound {
-        boolean result = base.channelService().deleteChannel("twitter-1-2", "design-1-5");
+    public void getDeleteChannel() throws ChannelNotFound {
+        boolean result = base.channelService().deleteChannel(DeleteChannelResponse.VALID_TEAM_SLUG, DeleteChannelResponse.VALID_CHANNEL_SLUG);
         Assert.assertEquals(true, result);
     }
 
@@ -85,7 +82,7 @@ public class ChannelServiceTest extends AbstractBaseTest {
      * @throws ChannelNotFound
      */
     @Test
-    public void updateChannel() throws BaseHttpException, ChannelNotFound {
+    public void testUpdateChannel() throws BaseHttpException, ChannelNotFound {
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("name", UpdateChannelResponse.VALID_NAME);
