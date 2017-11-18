@@ -6,10 +6,7 @@ import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
-import com.base.Http.Server.Responses.Team.CreateTeamResponse;
-import com.base.Http.Server.Responses.Team.GetAllTeamsResponse;
-import com.base.Http.Server.Responses.Team.GetTeamResponse;
-import com.base.Http.Server.Responses.Team.UpdateTeamResponse;
+import com.base.Http.Server.Responses.Team.*;
 import com.base.Models.Team;
 import org.junit.Assert;
 import org.junit.Test;
@@ -92,5 +89,10 @@ public class TeamServiceTest extends AbstractBaseTest {
         Assert.assertEquals(team.getInvitation_code(), UpdateTeamResponse.VALID_INVITATION_CODE);
         Assert.assertEquals(team.getDescription(), UpdateTeamResponse.VALID_DESCRIPTION);
         Assert.assertEquals(team.getId(), UpdateTeamResponse.VALID_ID);
+    }
+
+    public void getDeleteTeam() throws TeamNotFound {
+        boolean result = base.teamService().deleteTeam(DeleteTeamResponse.VALID_DELETED_TEAM_SLUG);
+        Assert.assertEquals(true, result);
     }
 }
