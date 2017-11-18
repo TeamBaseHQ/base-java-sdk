@@ -5,25 +5,45 @@ import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Exceptions.TeamNotFound;
+import com.base.Http.Request.Request;
+import com.base.Http.Response.Response;
+import com.base.Http.Server.Responses.Channel.CreateChannelResponse;
 import com.base.Models.Channel;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChannelServiceTest extends AbstractBaseTest {
 
     /**
+     * Test case for Create Channel
+     *
      * @throws BaseHttpException
-     * @throws TeamNotFound
      */
     @Test
-    public void createChannel() throws BaseHttpException, TeamNotFound {
-        Channel channel = base.channelService().createChannel("twitter-1-2", "Design Channel", "This is Design Channel", "ed5fc7", false);
-        Assert.assertEquals(channel.getName(), "Design");
+    public void testChannelCreate() throws BaseHttpException {
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("name", CreateChannelResponse.VALID_NAME);
+        parameters.put("description", CreateChannelResponse.VALID_DESCRIPTION);
+        parameters.put("color", CreateChannelResponse.VALID_COLOR);
+        parameters.put("is_private", CreateChannelResponse.VALID_STATUS);
+
+        Response response = this.base.sendRequest("/teams/".concat(CreateChannelResponse.VALID_TEAM_SLUG).concat("/channels"), Request.METHOD_POST, parameters);
+        System.out.println(response.getBody());
+        Channel channel = (Channel) Base.makeModel(Channel.class, response.getBody());
+        Assert.assertEquals(channel.getName(), CreateChannelResponse.VALID_NAME);
+        Assert.assertEquals(channel.getSlug(), CreateChannelResponse.VALID_CHANNEL_SLUG);
+        Assert.assertEquals(channel.getDescription(), CreateChannelResponse.VALID_DESCRIPTION);
+        Assert.assertEquals(channel.getColor(), CreateChannelResponse.VALID_COLOR);
+        Assert.assertEquals(channel.getIs_private(), CreateChannelResponse.VALID_STATUS);
+
+
     }
+
 
     /**
      * @throws BaseHttpException
