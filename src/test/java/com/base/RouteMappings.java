@@ -1,6 +1,7 @@
 package com.base;
 
 import com.base.Http.Server.Responses.Channel.CreateChannelResponse;
+import com.base.Http.Server.Responses.Channel.GetAllChannelsResponse;
 import com.base.Http.Server.Responses.Channel.GetChannelResponse;
 import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.User.GetUserResponse;
@@ -26,6 +27,7 @@ public class RouteMappings {
                 new CreateChannelResponse());
         routes.put("GET localhost/teams/".concat(GetChannelResponse.VALID_TEAM_SLUG).concat("/channels/").concat(GetChannelResponse.VALID_CHANNEL_SLUG),
                 new GetChannelResponse());
+        routes.put("GET localhost/teams/".concat(GetAllChannelsResponse.VALID_TEAM_SLUG).concat("/channels"), new GetAllChannelsResponse());
     }
 
     public Map<String, ServerResponseInterface> getRoutes() {
