@@ -3,9 +3,11 @@ package com.base.Services;
 import com.base.AbstractBaseTest;
 import com.base.Base;
 import com.base.Exceptions.BaseHttpException;
+import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Http.Server.Responses.Team.CreateTeamResponse;
+import com.base.Http.Server.Responses.Team.GetTeamResponse;
 import com.base.Models.Team;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,6 +34,24 @@ public class TeamServiceTest extends AbstractBaseTest {
         Assert.assertEquals(team.getName(), CreateTeamResponse.VALID_NAME);
         Assert.assertEquals(team.getInvitation_code(), CreateTeamResponse.VALID_INVITATION_CODE);
         Assert.assertEquals(team.getDescription(), CreateTeamResponse.VALID_DESCRIPTION);
+    }
+
+    /**
+     * @throws BaseHttpException
+     * @throws TeamNotFound
+     */
+    @Test
+    public void testGetTeam() throws BaseHttpException, TeamNotFound {
+        try {
+            Team team = base.teamService().getTeam(GetTeamResponse.VALID_TEAM_SLUG);
+            Assert.assertEquals(team.getName(), GetTeamResponse.VALID_NAME);
+            Assert.assertEquals(team.getDescription(), GetTeamResponse.VALID_DESCRIPTION);
+            Assert.assertEquals(team.getSlug(), GetTeamResponse.VALID_TEAM_SLUG);
+            Assert.assertEquals(team.getInvitation_code(), GetTeamResponse.VALID_INVITATION_CODE);
+            Assert.assertEquals(team.getId(), GetTeamResponse.VALID_ID);
+        } catch (TeamNotFound e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
 }
