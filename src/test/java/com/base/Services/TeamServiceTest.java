@@ -7,22 +7,25 @@ import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Http.Server.Responses.Team.CreateTeamResponse;
+import com.base.Http.Server.Responses.Team.GetAllTeamsResponse;
 import com.base.Http.Server.Responses.Team.GetTeamResponse;
 import com.base.Models.Team;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TeamServiceTest extends AbstractBaseTest {
 
     /**
-     * Test case for Create Channel
+     * Test case for Create Team
      *
      * @throws BaseHttpException
      */
     @Test
-    public void testChannelCreate() throws BaseHttpException {
+    public void testTeamCreate() throws BaseHttpException {
 
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("name", CreateTeamResponse.VALID_NAME);
@@ -51,6 +54,28 @@ public class TeamServiceTest extends AbstractBaseTest {
             Assert.assertEquals(team.getId(), GetTeamResponse.VALID_ID);
         } catch (TeamNotFound e) {
             Assert.fail(e.getMessage());
+        }
+    }
+
+
+    @Test
+    public void testGetAllTeams() throws BaseHttpException, TeamNotFound {
+
+        List<Team> teams = new ArrayList<>();
+
+        for (int i = 1; i <= 3; i++) {
+            teams.add((Team) new Team().setInvitation_code(GetTeamResponse.VALID_INVITATION_CODE)
+                    .setName(GetAllTeamsResponse.VALID_NAME.concat(" " + i))
+                    .setDescription(GetAllTeamsResponse.VALID_DESCRIPTION)
+                    .setSlug(GetAllTeamsResponse.VALID_TEAM_SLUG.concat("-" + i))
+                    .setId(GetAllTeamsResponse.VALID_ID));
+        }
+
+        List<Team> ActualTeam = base.teamService().getAllTeams();
+        for (int i = 0; i < ActualTeam.size(); i++) {
+            String actualName = ActualTeam.get(i).getName();
+            String expectName = teams.get(i).getName();
+            Assert.assertEquals(actualName, expectName);
         }
     }
 
