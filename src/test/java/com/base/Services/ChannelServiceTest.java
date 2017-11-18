@@ -8,6 +8,7 @@ import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Http.Server.Responses.Channel.CreateChannelResponse;
+import com.base.Http.Server.Responses.Channel.GetChannelResponse;
 import com.base.Models.Channel;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,8 +41,6 @@ public class ChannelServiceTest extends AbstractBaseTest {
         Assert.assertEquals(channel.getDescription(), CreateChannelResponse.VALID_DESCRIPTION);
         Assert.assertEquals(channel.getColor(), CreateChannelResponse.VALID_COLOR);
         Assert.assertEquals(channel.getIs_private(), CreateChannelResponse.VALID_STATUS);
-
-
     }
 
 
@@ -87,8 +86,16 @@ public class ChannelServiceTest extends AbstractBaseTest {
      * @throws ChannelNotFound
      */
     @Test
-    public void getChannel() throws BaseHttpException, ChannelNotFound {
-        Channel channel = base.channelService().getChannel("twitter-1-2", "design-1-5");
-        Assert.assertEquals(channel.getName(), "Design Channel");
+    public void testGetChannel() throws BaseHttpException, ChannelNotFound {
+        try {
+            Channel channel = base.channelService().getChannel(GetChannelResponse.VALID_TEAM_SLUG, GetChannelResponse.VALID_CHANNEL_SLUG);
+            Assert.assertEquals(channel.getName(), GetChannelResponse.VALID_NAME);
+            Assert.assertEquals(channel.getDescription(), GetChannelResponse.VALID_DESCRIPTION);
+            Assert.assertEquals(channel.getColor(), GetChannelResponse.VALID_COLOR);
+            Assert.assertEquals(channel.getSlug(), GetChannelResponse.VALID_CHANNEL_SLUG);
+            Assert.assertEquals(channel.getIs_private(), GetChannelResponse.VALID_STATUS);
+        } catch (ChannelNotFound e) {
+            Assert.fail(e.getMessage());
+        }
     }
 }
