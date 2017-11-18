@@ -3,6 +3,7 @@ language: java
 sudo: required
 
 before_install:
+ - update-ca-certificates -f
  - chmod +x ./gradlew
  - chmod +x ./gradle/wrapper/gradle-wrapper.jar
 
