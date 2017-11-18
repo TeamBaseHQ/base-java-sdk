@@ -1,9 +1,6 @@
 package com.base;
 
-import com.base.Http.Server.Responses.Channel.CreateChannelResponse;
-import com.base.Http.Server.Responses.Channel.GetAllChannelsResponse;
-import com.base.Http.Server.Responses.Channel.GetChannelResponse;
-import com.base.Http.Server.Responses.Channel.UpdateChannelResponse;
+import com.base.Http.Server.Responses.Channel.*;
 import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
@@ -33,8 +30,10 @@ public class RouteMappings {
         routes.put("GET localhost/teams/".concat(GetChannelResponse.VALID_TEAM_SLUG).concat("/channels/").concat(GetChannelResponse.VALID_CHANNEL_SLUG),
                 new GetChannelResponse());
         routes.put("GET localhost/teams/".concat(GetAllChannelsResponse.VALID_TEAM_SLUG).concat("/channels"), new GetAllChannelsResponse());
-        routes.put("POST localhost/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(UpdateChannelResponse.VALID_CHANNEL_SLUG)),
+        routes.put("PETCH localhost/teams/".concat(UpdateChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(UpdateChannelResponse.VALID_CHANNEL_SLUG)),
                 new UpdateChannelResponse());
+        routes.put("DELETE localhost/teams/".concat(DeleteChannelResponse.VALID_TEAM_SLUG).concat("/channels/".concat(DeleteChannelResponse.VALID_CHANNEL_SLUG)),
+                new DeleteChannelResponse());
     }
 
     public Map<String, ServerResponseInterface> getRoutes() {
