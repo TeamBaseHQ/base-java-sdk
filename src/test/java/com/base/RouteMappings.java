@@ -28,6 +28,7 @@ public class RouteMappings {
                 new GetUserResponse());
         routes.put("GET localhost/teams", new GetAllTeamsResponse());
         routes.put("PATCH localhost/teams/".concat(UpdateTeamResponse.VALID_SLUG), new UpdateTeamResponse());
+        routes.put("DELETE localhost/teams/".concat(DeleteChannelResponse.VALID_TEAM_SLUG), new DeleteChannelResponse());
     }
 
     private void registerUserMappings() {
