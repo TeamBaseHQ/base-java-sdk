@@ -2,10 +2,7 @@ package com.base;
 
 import com.base.Http.Server.Responses.Channel.*;
 import com.base.Http.Server.Responses.ServerResponseInterface;
-import com.base.Http.Server.Responses.Team.CreateTeamResponse;
-import com.base.Http.Server.Responses.Team.GetAllTeamsResponse;
-import com.base.Http.Server.Responses.Team.GetTeamResponse;
-import com.base.Http.Server.Responses.Team.UpdateTeamResponse;
+import com.base.Http.Server.Responses.Team.*;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
 
@@ -29,6 +26,7 @@ public class RouteMappings {
         routes.put("GET localhost/teams", new GetAllTeamsResponse());
         routes.put("PATCH localhost/teams/".concat(UpdateTeamResponse.VALID_SLUG), new UpdateTeamResponse());
         routes.put("DELETE localhost/teams/".concat(DeleteChannelResponse.VALID_TEAM_SLUG), new DeleteChannelResponse());
+        routes.put("GET localhost/teams/".concat(ListStaredMessagesResponse.VALID_TEAM_SLUG.concat("/starred-messages")), new ListStaredMessagesResponse());
     }
 
     private void registerUserMappings() {
