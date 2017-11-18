@@ -3,10 +3,8 @@ language: java
 sudo: required
 
 before_install:
- - sudo update-ca-certificates -f
  - chmod +x ./gradlew
  - chmod +x ./gradle/wrapper/gradle-wrapper.jar
 
 jdk:
   - oraclejdk8
-  - openjdk7
