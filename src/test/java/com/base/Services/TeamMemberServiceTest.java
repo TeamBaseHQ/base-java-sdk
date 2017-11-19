@@ -4,6 +4,7 @@ import com.base.AbstractBaseTest;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.TeamNotFound;
 import com.base.Http.Server.Responses.TeamMember.CreateTeamMemberResponse;
+import com.base.Http.Server.Responses.TeamMember.DeleteTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.GetAllTeamMembersResponse;
 import com.base.Http.Server.Responses.TeamMember.GetTeamMemberResponse;
 import com.base.Models.User;
@@ -62,4 +63,17 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
             Assert.assertEquals(actualName, expectName);
         }
     }
+
+    @Test
+    public void getDeleteTeamMember() throws TeamNotFound {
+        boolean result = false;
+        try {
+            result = base.teamMemberService().deleteTeamMember(DeleteTeamMemberResponse.VALID_TEAM_SLUG, DeleteTeamMemberResponse.VALID_USER_ID);
+            Assert.assertEquals(true, result);
+        } catch (BaseHttpException e) {
+            Assert.fail(e.getMessage());
+        }
+
+    }
+
 }
