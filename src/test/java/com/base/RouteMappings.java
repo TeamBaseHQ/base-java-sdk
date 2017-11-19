@@ -4,6 +4,7 @@ import com.base.Http.Server.Responses.Channel.*;
 import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.Team.*;
 import com.base.Http.Server.Responses.TeamMember.CreateTeamMemberResponse;
+import com.base.Http.Server.Responses.TeamMember.DeleteTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.GetAllTeamMembersResponse;
 import com.base.Http.Server.Responses.TeamMember.GetTeamMemberResponse;
 import com.base.Http.Server.Responses.User.GetUserResponse;
@@ -28,6 +29,8 @@ public class RouteMappings {
         routes.put("GET localhost/teams/".concat(GetTeamMemberResponse.VALID_TEAM_SLUG).concat("/members/").concat(GetTeamMemberResponse.VALID_USER_ID + ""),
                 new GetTeamMemberResponse());
         routes.put("GET localhost/teams/".concat(GetAllTeamMembersResponse.VALID_TEAM_SLUG).concat("/members"), new GetAllTeamMembersResponse());
+        routes.put("DELETE localhost/teams/".concat(DeleteTeamMemberResponse.VALID_TEAM_SLUG).concat("/members/")
+                .concat(DeleteTeamMemberResponse.VALID_USER_ID), new DeleteTeamMemberResponse());
     }
 
     private void registerTeamMapping() {
