@@ -29,7 +29,6 @@ public class TeamMemberServiceTest extends AbstractBaseTest {
         } catch (BaseHttpException | TeamNotFound e) {
             Assert.fail(e.getMessage());
         }
-        System.out.println(result);
         Assert.assertEquals(result, true);
     }
 
