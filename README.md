@@ -1,8 +1,9 @@
-![Base Java SDK](https://user-images.githubusercontent.com/893057/32977981-78a521f2-cc5e-11e7-8748-45713b036a1e.png)
+![Base Java SDK](https://user-images.githubusercontent.com/893057/32996593-b52b2c0a-cdaa-11e7-9c93-f6de3000b377.png)
 
 [![Build Status](https://img.shields.io/travis/TeamBaseHQ/base-java-sdk.svg?branch=master&style=flat-square)](https://travis-ci.org/TeamBaseHQ/base-java-sdk)
-[![JitPack](https://img.shields.io/jitpack/v/TeamBaseHQ/base-java-sdk.svg?style=flat-square)]()
-[![GitHub issues](https://img.shields.io/github/issues/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://github.com/TeamBaseHQ/base-java-sdk/issues) 
+[![Code Quality](https://img.shields.io/scrutinizer/g/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://scrutinizer-ci.com/g/TeamBaseHQ/base-java-sdk/?branch=master) 
+[![JitPack](https://img.shields.io/jitpack/v/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://jitpack.io/#teambasehq/base-java-sdk)
+[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg?style=flat-square)](https://github.com/TeamBaseHQ/base-java-sdk) 
 [![GitHub license](https://img.shields.io/github/license/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://github.com/TeamBaseHQ/base-java-sdk/blob/master/LICENSE)
 
 Base Java SDK
