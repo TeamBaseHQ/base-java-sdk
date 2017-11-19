@@ -1,6 +1,9 @@
 ![Base Java SDK](https://user-images.githubusercontent.com/893057/32977981-78a521f2-cc5e-11e7-8748-45713b036a1e.png)
 
-[![Build Status](https://travis-ci.org/TeamBaseHQ/base-java-sdk.svg?branch=master)](https://travis-ci.org/TeamBaseHQ/base-java-sdk)
+[![Build Status](https://img.shields.io/travis/TeamBaseHQ/base-java-sdk.svg?branch=master&style=flat-square)](https://travis-ci.org/TeamBaseHQ/base-java-sdk)
+[![JitPack](https://img.shields.io/jitpack/v/TeamBaseHQ/base-java-sdk.svg?style=flat-square)]()
+[![GitHub issues](https://img.shields.io/github/issues/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://github.com/TeamBaseHQ/base-java-sdk/issues) 
+[![GitHub license](https://img.shields.io/github/license/TeamBaseHQ/base-java-sdk.svg?style=flat-square)](https://github.com/TeamBaseHQ/base-java-sdk/blob/master/LICENSE)
 
 Base Java SDK
 ==============
