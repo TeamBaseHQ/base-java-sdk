@@ -63,6 +63,11 @@ public final class Base {
     private PreferenceService preferenceService;
 
     /**
+     * Create InvitationService  Reference
+     */
+    private InvitationService invitationService;
+
+    /**
      * Construct {@link Base} with all bootstrapServices
      */
     public Base() {
@@ -332,6 +337,16 @@ public final class Base {
     }
 
     /**
+     * Base PreferencesService
+     *
+     * @return PreferencesService
+     */
+    public InvitationService invitationService() {
+        return this.invitationService;
+    }
+
+
+    /**
      * Generate All bootstrapServices
      */
     private void bootstrapServices() {
@@ -343,5 +358,6 @@ public final class Base {
         this.threadService = new ThreadService(this);
         this.messageService = new MessageService(this);
         this.preferenceService = new PreferenceService(this);
+        this.invitationService = new InvitationService(this);
     }
 }
