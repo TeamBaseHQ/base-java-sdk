@@ -4,6 +4,7 @@ import com.base.AbstractBaseTest;
 import com.base.Exceptions.BaseHttpException;
 import com.base.Exceptions.ChannelNotFound;
 import com.base.Http.Server.Responses.ChannelMember.CreateChannelMemberResponse;
+import com.base.Http.Server.Responses.ChannelMember.DeleteChannelMemberResponse;
 import com.base.Http.Server.Responses.ChannelMember.GetAllChannelMembersResponse;
 import com.base.Http.Server.Responses.ChannelMember.GetChannelMemberResponse;
 import com.base.Models.User;
@@ -62,7 +63,7 @@ public class ChannelMemberServiceTest extends AbstractBaseTest {
         List<User> ActualTeam = null;
         try {
             ActualTeam = base.channelMemberService()
-                            .getAllChannelMembers(GetAllChannelMembersResponse.VALID_TEAM_SLUG,
+                    .getAllChannelMembers(GetAllChannelMembersResponse.VALID_TEAM_SLUG,
                             GetAllChannelMembersResponse.VALID_CHANNEL_SLUG);
             for (int i = 0; i < ActualTeam.size(); i++) {
                 String actualName = ActualTeam.get(i).getEmail();
@@ -74,5 +75,17 @@ public class ChannelMemberServiceTest extends AbstractBaseTest {
         }
 
     }
+
+    @Test
+    public void testDeleteChannelMember() {
+        boolean result = false;
+        try {
+            result = base.channelMemberService().deleteChannelMember(DeleteChannelMemberResponse.VALID_TEAM_SLUG, DeleteChannelMemberResponse.VALID_CHANNEL_SLUG, DeleteChannelMemberResponse.VALID_USER_ID);
+            Assert.assertEquals(true, result);
+        } catch (BaseHttpException | ChannelNotFound e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
 
 }
