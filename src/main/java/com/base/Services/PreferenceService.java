@@ -39,7 +39,7 @@ public class PreferenceService {
      * @return Preference
      * @throws BaseHttpException Exception
      */
-    public Preference createPreference(String name, String value, String category) throws BaseHttpException {
+    public Preference savePreference(String name, String value, String category) throws BaseHttpException {
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("value", value);
         parameters.put("category", category);
