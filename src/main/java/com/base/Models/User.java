@@ -17,6 +17,30 @@ public class User extends BaseModel {
      */
     protected boolean is_verified;
 
+    /**
+     * User Media
+     */
+    protected Media picture;
+
+    /**
+     * User Media
+     *
+     * @return Media
+     */
+    public Media getPicture() {
+        return picture;
+    }
+
+    /**
+     * Set User Media
+     *
+     * @param picture
+     * @return
+     */
+    public User setPicture(Media picture) {
+        this.picture = picture;
+        return this;
+    }
 
     /**
      * User Name
