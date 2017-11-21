@@ -2,6 +2,7 @@ package com.base;
 
 import com.base.Http.Server.Responses.Channel.*;
 import com.base.Http.Server.Responses.ChannelMember.CreateChannelMemberResponse;
+import com.base.Http.Server.Responses.ChannelMember.GetChannelMemberResponse;
 import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.Team.*;
 import com.base.Http.Server.Responses.TeamMember.CreateTeamMemberResponse;
@@ -30,6 +31,11 @@ public class RouteMappings {
         routes.put("POST localhost/teams/".concat(CreateChannelMemberResponse.VALID_TEAM_SLUG)
                 .concat("/channels/").concat(CreateChannelMemberResponse.VALID_CHANNEL_SLUG)
                 .concat("/members"), new CreateChannelMemberResponse());
+
+        routes.put("GET localhost/teams/".concat(GetChannelMemberResponse.VALID_TEAM_SLUG)
+                        .concat("/channels/").concat(GetChannelMemberResponse.VALID_CHANNEL_SLUG)
+                        .concat("/members/").concat(String.valueOf(GetChannelMemberResponse.VALID_USER_ID )),
+                new GetChannelMemberResponse());
     }
 
     private void registerTeamMemberMappings() {
