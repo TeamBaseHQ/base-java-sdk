@@ -11,6 +11,7 @@ import com.base.Http.Server.Responses.TeamMember.CreateTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.DeleteTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.GetAllTeamMembersResponse;
 import com.base.Http.Server.Responses.TeamMember.GetTeamMemberResponse;
+import com.base.Http.Server.Responses.Thread.CreateChannelThreadResponse;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
 
@@ -27,6 +28,13 @@ public class RouteMappings {
         registerTeamMapping();
         registerTeamMemberMappings();
         registerChannelMemberMappings();
+        registerThreadMappings();
+    }
+
+    private void registerThreadMappings() {
+        routes.put("POST localhost/teams/".concat(CreateChannelThreadResponse.VALID_TEAM_SLUG)
+                .concat("/channels/").concat(CreateChannelThreadResponse.VALID_CHANNEL_SLUG)
+                .concat("/threads"), new CreateChannelThreadResponse());
     }
 
     private void registerChannelMemberMappings() {
