@@ -43,6 +43,11 @@ public class Message extends BaseModel {
     private Media[] attachments;
 
     /**
+     * Message Thread
+     */
+    private Thread thread;
+
+    /**
      * Get Message Sender
      *
      * @return User
@@ -188,6 +193,15 @@ public class Message extends BaseModel {
 
     public Message setAttachments(Media[] attachments) {
         this.attachments = attachments;
+        return this;
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public Message setThread(Thread thread) {
+        this.thread = thread;
         return this;
     }
 }
