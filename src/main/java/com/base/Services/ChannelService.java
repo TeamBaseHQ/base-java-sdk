@@ -185,18 +185,20 @@ public class ChannelService {
         }
     }
 
-    public Media[] uploadMedia(String teamSlug, String channelSlug, File[] pictures) throws ChannelNotFound {
+    public Media[] uploadMedia(String teamSlug, String channelSlug, File[] files) throws ChannelNotFound {
         Map<String, String> parameters = new HashMap<>();
 
-        Map<String, File> files = new HashMap<>();
-        for (File picture : pictures) {
-            files.put("file", picture);
+        Map<String, File> requestFiles = new HashMap<>();
+
+        for (int i = 0; i < files.length; i++) {
+            requestFiles.put("files*" + i, files[i]);
         }
+
         Response response = null;
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/media");
             response = this.base.sendRequest(URL, Request.METHOD_POST, parameters, new HashMap<>(),
-                    files);
+                    requestFiles);
         } catch (NotFound e) {
             throw new ChannelNotFound(teamSlug);
         } catch (BaseHttpException e) {
