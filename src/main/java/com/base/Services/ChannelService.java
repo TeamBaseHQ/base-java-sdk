@@ -9,7 +9,9 @@ import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Channel;
+import com.base.Models.Media;
 
+import java.io.File;
 import java.util.*;
 
 public class ChannelService {
@@ -181,6 +183,26 @@ public class ChannelService {
         } catch (NotFound e) {
             throw new ChannelNotFound(teamSlug);
         }
+    }
+
+    public Media[] uploadMedia(String teamSlug, String channelSlug, File[] pictures) throws ChannelNotFound {
+        Map<String, String> parameters = new HashMap<>();
+
+        Map<String, File> files = new HashMap<>();
+        for (File picture : pictures) {
+            files.put("file", picture);
+        }
+        Response response = null;
+        try {
+            String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/media");
+            response = this.base.sendRequest(URL, Request.METHOD_POST, parameters, new HashMap<>(),
+                    files);
+        } catch (NotFound e) {
+            throw new ChannelNotFound(teamSlug);
+        } catch (BaseHttpException e) {
+            e.printStackTrace();
+        }
+        return (Media[]) Base.makeModel(Media[].class, response.getBody());
     }
 
 }
