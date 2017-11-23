@@ -10,6 +10,7 @@ import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
 import com.base.Models.Message;
 
+import java.io.File;
 import java.util.*;
 
 public class MessageService {
@@ -41,13 +42,38 @@ public class MessageService {
      * @throws BaseHttpException
      */
     public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type) throws ThreadNotFound, BaseHttpException {
+        File[] files = {};
+        return this.createMessage(teamSlug, channelSlug, threadSlug, content, type, files);
+    }
+
+    /**
+     * Create Message of Thread
+     *
+     * @param teamSlug    Message teamSlug
+     * @param channelSlug Message channelSlug
+     * @param threadSlug  Message threadSlug
+     * @param content     Message content
+     * @param type        Message type
+     * @param files       Message files
+     * @return Message
+     * @throws ThreadNotFound
+     * @throws BaseHttpException
+     */
+    public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type, File[] files) throws ThreadNotFound, BaseHttpException {
         HashMap<String, String> parameters = new HashMap<>();
+
+        Map<String, File> requestFiles = new HashMap<>();
+
+        for (int i = 0; i < files.length; i++) {
+            requestFiles.put("files*" + i, files[i]);
+        }
+
         parameters.put("content", content);
         parameters.put("type", type);
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").
                     concat(threadSlug).concat("/messages");
-            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters);
+            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters, new HashMap<>(), requestFiles);
             return (Message) Base.makeModel(Message.class, response.getBody());
         } catch (NotFound e) {
             throw new ThreadNotFound(teamSlug);
