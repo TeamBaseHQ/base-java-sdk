@@ -17,7 +17,7 @@ public final class BaseClient {
     /**
      * BaseClient Default API URL
      */
-    private static final String DEFAULT_API_URL = "http://baseapp-backend.kunalvarma.in/api";
+    private static final String DEFAULT_API_URL = "https://platform.baseapp.in/api";
 
     /**
      * Base Client apiUrl
