@@ -298,7 +298,7 @@ public final class BaseClient {
      */
     private Map<String, String> buildHeaders(Request request) {
         // Get All the Headers
-        Map<String, String> allHeaders = BaseClient.getDefaultHeaders();
+        Map<String, String> allHeaders = this.getHeaders();
 
         // Add the Auth Headers
         allHeaders.putAll(this.getAuthHeaders(request));
