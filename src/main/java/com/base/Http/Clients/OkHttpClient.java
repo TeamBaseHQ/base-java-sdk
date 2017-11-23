@@ -199,15 +199,9 @@ public class OkHttpClient implements HttpClientInterface {
             String fileName = key.contains("*") ? key.substring(0, key.indexOf('*')).concat("[]") : key;
 
             if (file.exists()) {
-                MediaType fileType = null;
-                try {
-                    fileType = MediaType.parse(Files.probeContentType(file.toPath()));
-                } catch (IOException e) {
-                    throw new Exception(e);
-                }
+                MediaType fileType = MediaType.parse("application/octet-stream");
                 builder.addFormDataPart(fileName, file.getName(), RequestBody.create(fileType, file));
             }
         }
     }
-
 }
