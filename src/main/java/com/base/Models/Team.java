@@ -35,6 +35,11 @@ public class Team extends BaseModel {
     private User owner;
 
     /**
+     * Team Picture
+     */
+    private Media picture;
+
+    /**
      * Team Owner
      *
      * @return User
@@ -151,6 +156,15 @@ public class Team extends BaseModel {
      */
     public Team setSlug(String slug) {
         this.slug = slug;
+        return this;
+    }
+
+    public Media getPicture() {
+        return picture;
+    }
+
+    public Team setPicture(Media picture) {
+        this.picture = picture;
         return this;
     }
 }
