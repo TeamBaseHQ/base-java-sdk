@@ -47,6 +47,11 @@ public class Channel extends BaseModel {
     private String is_private;
 
     /**
+     * Channel Team
+     */
+    private Team team;
+
+    /**
      * Return Channel is_private
      *
      * @return
@@ -243,6 +248,15 @@ public class Channel extends BaseModel {
      */
     public Channel setSlug(String slug) {
         this.slug = slug;
+        return this;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public Channel setTeam(Team team) {
+        this.team = team;
         return this;
     }
 }
