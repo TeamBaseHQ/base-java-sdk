@@ -7,9 +7,11 @@ import com.base.Exceptions.TeamNotFound;
 import com.base.Helpers;
 import com.base.Http.Request.Request;
 import com.base.Http.Response.Response;
+import com.base.Models.Media;
 import com.base.Models.Message;
 import com.base.Models.Team;
 
+import java.io.File;
 import java.util.*;
 
 public class TeamService {
@@ -165,6 +167,26 @@ public class TeamService {
         } catch (NotFound e) {
             throw new TeamNotFound(teamSlug);
         }
+    }
+
+    /**
+     * Upload Team Picture.
+     *
+     * @param slug
+     * @param picture
+     * @return
+     * @throws BaseHttpException
+     */
+    public Media uploadTeamPicture(String slug, File picture) throws BaseHttpException {
+        Map<String, String> parameters = new HashMap<>();
+
+        Map<String, File> files = new HashMap<>();
+        files.put("file", picture);
+
+        String url = "/teams/".concat(slug).concat("/picture");
+        Response response = this.base.sendRequest(url, Request.METHOD_POST, parameters, new HashMap<>(),
+                files);
+        return (Media) Base.makeModel(Media.class, response.getBody());
     }
 
 }
