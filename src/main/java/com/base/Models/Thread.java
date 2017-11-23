@@ -29,6 +29,11 @@ public class Thread extends BaseModel {
     private User owner;
 
     /**
+     * Thread Channel
+     */
+    private Channel channel;
+
+    /**
      * Get Thread Owner
      *
      * @return User
@@ -145,6 +150,15 @@ public class Thread extends BaseModel {
      */
     public Thread setSlug(String slug) {
         this.slug = slug;
+        return this;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public Thread setChannel(Channel channel) {
+        this.channel = channel;
         return this;
     }
 }
