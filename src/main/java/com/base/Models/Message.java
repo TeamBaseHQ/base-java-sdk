@@ -38,6 +38,11 @@ public class Message extends BaseModel {
     private User sender;
 
     /**
+     * Message Attachments
+     */
+    private Media[] attachments;
+
+    /**
      * Get Message Sender
      *
      * @return User
@@ -174,6 +179,15 @@ public class Message extends BaseModel {
      */
     public Message setSlug(String slug) {
         this.slug = slug;
+        return this;
+    }
+
+    public Media[] getAttachments() {
+        return attachments;
+    }
+
+    public Message setAttachments(Media[] attachments) {
+        this.attachments = attachments;
         return this;
     }
 }
