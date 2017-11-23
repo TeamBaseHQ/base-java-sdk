@@ -8,3 +8,8 @@ before_install:
 
 jdk:
   - oraclejdk8
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always
