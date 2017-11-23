@@ -1,12 +1,17 @@
 package com.base;
 
 import com.base.Http.Server.Responses.Channel.*;
+import com.base.Http.Server.Responses.ChannelMember.CreateChannelMemberResponse;
+import com.base.Http.Server.Responses.ChannelMember.DeleteChannelMemberResponse;
+import com.base.Http.Server.Responses.ChannelMember.GetAllChannelMembersResponse;
+import com.base.Http.Server.Responses.ChannelMember.GetChannelMemberResponse;
 import com.base.Http.Server.Responses.ServerResponseInterface;
 import com.base.Http.Server.Responses.Team.*;
 import com.base.Http.Server.Responses.TeamMember.CreateTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.DeleteTeamMemberResponse;
 import com.base.Http.Server.Responses.TeamMember.GetAllTeamMembersResponse;
 import com.base.Http.Server.Responses.TeamMember.GetTeamMemberResponse;
+import com.base.Http.Server.Responses.Thread.CreateChannelThreadResponse;
 import com.base.Http.Server.Responses.User.GetUserResponse;
 import com.base.Http.Server.Responses.User.UserLoginResponse;
 
@@ -22,6 +27,34 @@ public class RouteMappings {
         registerChannelMappings();
         registerTeamMapping();
         registerTeamMemberMappings();
+        registerChannelMemberMappings();
+        registerThreadMappings();
+    }
+
+    private void registerThreadMappings() {
+        routes.put("POST localhost/teams/".concat(CreateChannelThreadResponse.VALID_TEAM_SLUG)
+                .concat("/channels/").concat(CreateChannelThreadResponse.VALID_CHANNEL_SLUG)
+                .concat("/threads"), new CreateChannelThreadResponse());
+    }
+
+    private void registerChannelMemberMappings() {
+        routes.put("POST localhost/teams/".concat(CreateChannelMemberResponse.VALID_TEAM_SLUG)
+                .concat("/channels/").concat(CreateChannelMemberResponse.VALID_CHANNEL_SLUG)
+                .concat("/members"), new CreateChannelMemberResponse());
+
+        routes.put("GET localhost/teams/".concat(GetChannelMemberResponse.VALID_TEAM_SLUG)
+                        .concat("/channels/").concat(GetChannelMemberResponse.VALID_CHANNEL_SLUG)
+                        .concat("/members/").concat(String.valueOf(GetChannelMemberResponse.VALID_USER_ID)),
+                new GetChannelMemberResponse());
+
+        routes.put("GET localhost/teams/".concat(GetAllChannelMembersResponse.VALID_TEAM_SLUG)
+                .concat("/channels/").concat(GetAllChannelMembersResponse.VALID_CHANNEL_SLUG)
+                .concat("/members"), new GetAllChannelMembersResponse());
+
+        routes.put("DELETE localhost/teams/".concat(DeleteChannelMemberResponse.VALID_TEAM_SLUG)
+                        .concat("/channels/").concat(DeleteChannelMemberResponse.VALID_CHANNEL_SLUG)
+                        .concat("/members/").concat(String.valueOf(DeleteChannelMemberResponse.VALID_USER_ID)),
+                new DeleteChannelMemberResponse());
     }
 
     private void registerTeamMemberMappings() {
