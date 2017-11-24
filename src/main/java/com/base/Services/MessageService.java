@@ -42,8 +42,8 @@ public class MessageService {
      * @throws BaseHttpException
      */
     public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type) throws ThreadNotFound, BaseHttpException {
-        File[] files = {};
-        return this.createMessage(teamSlug, channelSlug, threadSlug, content, type, files);
+        int[] fileIds = {};
+        return this.createMessage(teamSlug, channelSlug, threadSlug, content, type, fileIds);
     }
 
     /**
@@ -54,26 +54,25 @@ public class MessageService {
      * @param threadSlug  Message threadSlug
      * @param content     Message content
      * @param type        Message type
-     * @param files       Message files
+     * @param mediaIds    Message Media IDs
      * @return Message
      * @throws ThreadNotFound
      * @throws BaseHttpException
      */
-    public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type, File[] files) throws ThreadNotFound, BaseHttpException {
+    public Message createMessage(String teamSlug, String channelSlug, String threadSlug, String content, String type, int[] mediaIds) throws ThreadNotFound, BaseHttpException {
         HashMap<String, String> parameters = new HashMap<>();
-
-        Map<String, File> requestFiles = new HashMap<>();
-
-        for (int i = 0; i < files.length; i++) {
-            requestFiles.put("files*" + i, files[i]);
-        }
 
         parameters.put("content", content);
         parameters.put("type", type);
+
+        for (int i = 0; i < mediaIds.length; i++) {
+            parameters.put("media_ids*" + i, String.valueOf(mediaIds[i]));
+        }
+
         try {
             String URL = "/teams/".concat(teamSlug).concat("/channels/").concat(channelSlug).concat("/threads/").
                     concat(threadSlug).concat("/messages");
-            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters, new HashMap<>(), requestFiles);
+            Response response = this.base.sendRequest(URL, Request.METHOD_POST, parameters);
             return (Message) Base.makeModel(Message.class, response.getBody());
         } catch (NotFound e) {
             throw new ThreadNotFound(teamSlug);
